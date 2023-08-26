@@ -63,4 +63,4 @@ The repository aims to make this innovative algorithm accessible and has the pot
 
 For a visual demonstration of the algorithm controlling external synthesizers, [watch this video](https://www.youtube.com/watch?v=c9yvGJksDw0&ab_channel=LucianoCiamarone).
 
-A C++ version of the algorithm is currently being prepared and is available within this GitHub repository. Stay tuned for updates! For the latest news, visit [http://lushmaroon.altervista.org/news.html](http://lushmaroon.altervista.org/news.html).
+A C++ version of the algorithm is currently being prepared and is available within this GitHub repository. Stay tuned for updates! For the latest news, visit [my Telegram channel](https://t.me/luciamarockmood).
