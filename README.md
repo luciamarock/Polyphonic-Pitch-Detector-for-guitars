@@ -61,6 +61,6 @@ The versatility of this algorithm opens up numerous musical applications. One pr
 
 The repository aims to make this innovative algorithm accessible and has the potential to reshape sound possibilities, making the dream of creating unique and distinctive guitar sounds a reality. The system's compact form factor allows for interaction with smartphones and online communities, ushering in new realms of sonic exploration.
 
-For a visual demonstration of the algorithm controlling external synthesizers, [watch this video]([https://www.youtube.com/watch?v=c9yvGJksDw0&ab_channel=LucianoCiamarone](https://youtu.be/R00SUzQEruI?si=FWJeWYHj5FHHUtmU)).
+For a visual demonstration of the algorithm controlling external synthesizers, [watch this video](https://www.youtube.com/watch?v=R00SUzQEruI&ab_channel=Lu%C3%A7ianodelosCimarrones).
 
 A C++ version of the algorithm is currently being prepared and is available within this GitHub repository. Stay tuned for updates! For the latest news, visit [my Telegram channel](https://t.me/luciamarockmood).
