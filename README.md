@@ -37,7 +37,7 @@ To build and compile the application, follow these steps:
 
 1. Open a terminal and navigate to the project directory:
    ```sh
-   $ cd pdct
+   $ cd pdct_lib
    ```
 
 2. Create a 'build' directory:
