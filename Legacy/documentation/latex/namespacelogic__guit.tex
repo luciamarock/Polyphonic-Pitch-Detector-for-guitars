@@ -1,0 +1,399 @@
+\hypertarget{namespacelogic__guit}{}\doxysection{logic\+\_\+guit Namespace Reference}
+\label{namespacelogic__guit}\index{logic\_guit@{logic\_guit}}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} = \char`\"{}Amag\+\_\+open\char`\"{}
+\begin{DoxyCompactList}\small\item\em nota and chitarra are useful to compose the name of the score file to load. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{namespacelogic__guit_a2065cc79dbf3046899e3d83856c998f5}{chitarra}} = \char`\"{}poly\char`\"{}
+\item 
+string \mbox{\hyperlink{namespacelogic__guit_a2f10e5368af4728d3162d84b1bc52a97}{arg1}} = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+filefft.\+out\char`\"{}
+\item 
+string \mbox{\hyperlink{namespacelogic__guit_ad7f8b690bf5c01b1a17339f39cce5282}{arg2}} = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+filefilter.\+out\char`\"{}
+\item 
+string \mbox{\hyperlink{namespacelogic__guit_ae3ff442529d90bd0a252c58e61a0df66}{arg3}} = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+monodet.\+out\char`\"{}
+\item 
+string \mbox{\hyperlink{namespacelogic__guit_af0a5e727876a5cca6302c90e45d47723}{arg4}} = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+integer.\+out\char`\"{}
+\item 
+\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}} = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_a2f10e5368af4728d3162d84b1bc52a97}{arg1}})
+\item 
+\mbox{\hyperlink{namespacelogic__guit_aab440dda5ca9ea6af5b5a38eed329dcb}{data}} = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_ad7f8b690bf5c01b1a17339f39cce5282}{arg2}})
+\item 
+\mbox{\hyperlink{namespacelogic__guit_a46ae707935a93ef61e230ba58839a55b}{fund}} = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_ae3ff442529d90bd0a252c58e61a0df66}{arg3}})
+\item 
+\mbox{\hyperlink{namespacelogic__guit_a6e28eaf7807679acc1c62dd6123f55ca}{env}} = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_af0a5e727876a5cca6302c90e45d47723}{arg4}})
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_adfe6472cdd98506d122df59f8fb7fc79}{envprev}} = 10.\+0
+\item 
+\mbox{\hyperlink{namespacelogic__guit_a18310be06e67e38b5a393df64af897d0}{freq}} = genfromtxt(\char`\"{}./algo\+\_\+outputs/notes.\+txt\char`\"{})
+\item 
+int \mbox{\hyperlink{namespacelogic__guit_a49b0c08a2e2bf73f4611c5d58505969a}{existsum}} = 0
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_af4b96858e294f3f3712b36f5b2bc6e66}{sens}} = 0.\+1
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_a9db8b11839004cf84257c48a05c17e69}{Pshp}} = 1.\+03
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_a78d3d7a0aa53e35f8009a062989e737a}{Pshs}} = 1.\+025
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_a26eb277ee4112ecbf2dd480cfd2ce6b8}{Pthp}} = 0.\+6$\ast$\mbox{\hyperlink{namespacelogic__guit_af4b96858e294f3f3712b36f5b2bc6e66}{sens}}
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_aac040e24f35fef9ab3d449da246f335a}{Pths}} = 0.\+7$\ast$\mbox{\hyperlink{namespacelogic__guit_af4b96858e294f3f3712b36f5b2bc6e66}{sens}}
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a4dae7e6478476814840f240207526146}{vectmono}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a09aeabda8edddc4145add15c1940abe1}{vectnote}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a6e510f9dea3986a15557c1109ef8bd88}{memoria}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a8f9ac2ac6d655ffbd6aa6bc975227576}{exist}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_a4cb0418c4d5f0986b1fa159b47e42123}{allowance}} = 0.\+0
+\begin{DoxyCompactList}\small\item\em using th attack to enable / disable the allowance \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacelogic__guit_ad3221c6eb2f8c5025bc518cd1abfc0b6}{f}} = open(\char`\"{}./algo\+\_\+outputs/names.\+txt\char`\"{},\char`\"{}r\char`\"{})
+\item 
+\mbox{\hyperlink{namespacelogic__guit_a2601f78418094e5d85391001750fff65}{labels}} = f.\+readlines()
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a6a9fced8da159e234ec5c9cd4c4efd4e}{names}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{namespacelogic__guit_aea7bae2d67932bcd0031e6064d6c18ba}{name}} = str(\mbox{\hyperlink{namespacelogic__guit_a2601f78418094e5d85391001750fff65}{labels}}\mbox{[}k\mbox{]}).split(\textquotesingle{}\textbackslash{}n\textquotesingle{})
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_a947b2d707fac24860ac2ac294812471b}{pause}} = 0.\+09
+\item 
+int \mbox{\hyperlink{namespacelogic__guit_a5214369c998606c2ecce97ffaa00b404}{condizione}} = 0
+\begin{DoxyCompactList}\small\item\em For each chunk (i) we iterate over the 51 notes (j) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespacelogic__guit_a2e1751c1193037026f51f5a612675104}{dummywarn}} = 0
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a020b1f70904cc5a50ded2c2bae67017b}{vectcond}} = \mbox{[}1.\+5\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a3a33eaddcee7cbedb4c831c170844c8e}{jvect}} = \mbox{[}1.\+4\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_aa927411480b74fe553f9336dee16a9ad}{vectplot}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_a852f6a99bda2e8583f17b01bfa2a5744}{vectfft}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_aed0a63126fad13e440d4e539400e047f}{vect}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_aa7b2a4565b9a69669bcf525603231e68}{existplot}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+list \mbox{\hyperlink{namespacelogic__guit_aa41c04cbb866fed29fa664240fc0db7a}{baseline}} = \mbox{[}0\mbox{]}$\ast$51
+\item 
+\mbox{\hyperlink{namespacelogic__guit_a7a4bfac787802be16a2b199075a9131e}{portion}} = int(len(\mbox{\hyperlink{namespacelogic__guit_aab440dda5ca9ea6af5b5a38eed329dcb}{data}})/4)
+\begin{DoxyCompactList}\small\item\em Portion is used to establish the duration of the plot. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespacelogic__guit_a7258ef9484e446c633949d0365001be2}{scarto}} = 0
+\item 
+tuple \mbox{\hyperlink{namespacelogic__guit_a441ddc1ebeb79ef75a50c8a1dd42d8b1}{time}} = (i-\/\mbox{\hyperlink{namespacelogic__guit_a7258ef9484e446c633949d0365001be2}{scarto}}) $\ast$ 256 / 44100. $\ast$ 1000
+\item 
+tuple \mbox{\hyperlink{namespacelogic__guit_a6b4c418cac866bd6e323eb23053cde1e}{ratio2}} = (\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j+12\mbox{]}+\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j+19\mbox{]})$\ast$0.\+5/\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j-\/7\mbox{]}
+\item 
+\mbox{\hyperlink{namespacelogic__guit_a197d38a47cd64548065f7db9fd01faf6}{ratio1}} = \mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j+12\mbox{]}/\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j-\/7\mbox{]}
+\item 
+float \mbox{\hyperlink{namespacelogic__guit_ae27d335855acbe8f071496957ea310b1}{attack}} = \mbox{\hyperlink{namespacelogic__guit_a6e28eaf7807679acc1c62dd6123f55ca}{env}}\mbox{[}i\mbox{]}/\mbox{\hyperlink{namespacelogic__guit_adfe6472cdd98506d122df59f8fb7fc79}{envprev}}$\ast$0.\+5
+\begin{DoxyCompactList}\small\item\em calculating the attack based on the enevelopes at the current chunck and the one before \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacelogic__guit_a8c5f05a014ec4cd0b23642a2f624354c}{minimo}} = min(\mbox{\hyperlink{namespacelogic__guit_aed0a63126fad13e440d4e539400e047f}{vect}})
+\begin{DoxyCompactList}\small\item\em plot-\/only variables \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacelogic__guit_a70f35e9c1c5a14a349e5c274fd841a63}{color}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacelogic__guit_a4cb0418c4d5f0986b1fa159b47e42123}\label{namespacelogic__guit_a4cb0418c4d5f0986b1fa159b47e42123}} 
+\index{logic\_guit@{logic\_guit}!allowance@{allowance}}
+\index{allowance@{allowance}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{allowance}{allowance}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+allowance = 0.\+0}
+
+
+
+using th attack to enable / disable the allowance 
+
+\mbox{\Hypertarget{namespacelogic__guit_a2f10e5368af4728d3162d84b1bc52a97}\label{namespacelogic__guit_a2f10e5368af4728d3162d84b1bc52a97}} 
+\index{logic\_guit@{logic\_guit}!arg1@{arg1}}
+\index{arg1@{arg1}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{arg1}{arg1}}
+{\footnotesize\ttfamily string logic\+\_\+guit.\+arg1 = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+filefft.\+out\char`\"{}}
+
+\mbox{\Hypertarget{namespacelogic__guit_ad7f8b690bf5c01b1a17339f39cce5282}\label{namespacelogic__guit_ad7f8b690bf5c01b1a17339f39cce5282}} 
+\index{logic\_guit@{logic\_guit}!arg2@{arg2}}
+\index{arg2@{arg2}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{arg2}{arg2}}
+{\footnotesize\ttfamily string logic\+\_\+guit.\+arg2 = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+filefilter.\+out\char`\"{}}
+
+\mbox{\Hypertarget{namespacelogic__guit_ae3ff442529d90bd0a252c58e61a0df66}\label{namespacelogic__guit_ae3ff442529d90bd0a252c58e61a0df66}} 
+\index{logic\_guit@{logic\_guit}!arg3@{arg3}}
+\index{arg3@{arg3}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{arg3}{arg3}}
+{\footnotesize\ttfamily string logic\+\_\+guit.\+arg3 = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+monodet.\+out\char`\"{}}
+
+\mbox{\Hypertarget{namespacelogic__guit_af0a5e727876a5cca6302c90e45d47723}\label{namespacelogic__guit_af0a5e727876a5cca6302c90e45d47723}} 
+\index{logic\_guit@{logic\_guit}!arg4@{arg4}}
+\index{arg4@{arg4}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{arg4}{arg4}}
+{\footnotesize\ttfamily string logic\+\_\+guit.\+arg4 = \char`\"{}./scores/\char`\"{} + chitarra + \char`\"{}/\char`\"{} + \mbox{\hyperlink{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}{nota}} + \char`\"{}\+\_\+integer.\+out\char`\"{}}
+
+\mbox{\Hypertarget{namespacelogic__guit_ae27d335855acbe8f071496957ea310b1}\label{namespacelogic__guit_ae27d335855acbe8f071496957ea310b1}} 
+\index{logic\_guit@{logic\_guit}!attack@{attack}}
+\index{attack@{attack}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{attack}{attack}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+attack = \mbox{\hyperlink{namespacelogic__guit_a6e28eaf7807679acc1c62dd6123f55ca}{env}}\mbox{[}i\mbox{]}/\mbox{\hyperlink{namespacelogic__guit_adfe6472cdd98506d122df59f8fb7fc79}{envprev}}$\ast$0.\+5}
+
+
+
+calculating the attack based on the enevelopes at the current chunck and the one before 
+
+\mbox{\Hypertarget{namespacelogic__guit_aa41c04cbb866fed29fa664240fc0db7a}\label{namespacelogic__guit_aa41c04cbb866fed29fa664240fc0db7a}} 
+\index{logic\_guit@{logic\_guit}!baseline@{baseline}}
+\index{baseline@{baseline}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{baseline}{baseline}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+baseline = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a2065cc79dbf3046899e3d83856c998f5}\label{namespacelogic__guit_a2065cc79dbf3046899e3d83856c998f5}} 
+\index{logic\_guit@{logic\_guit}!chitarra@{chitarra}}
+\index{chitarra@{chitarra}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{chitarra}{chitarra}}
+{\footnotesize\ttfamily string logic\+\_\+guit.\+chitarra = \char`\"{}poly\char`\"{}}
+
+\mbox{\Hypertarget{namespacelogic__guit_a70f35e9c1c5a14a349e5c274fd841a63}\label{namespacelogic__guit_a70f35e9c1c5a14a349e5c274fd841a63}} 
+\index{logic\_guit@{logic\_guit}!color@{color}}
+\index{color@{color}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+color}
+
+\mbox{\Hypertarget{namespacelogic__guit_a5214369c998606c2ecce97ffaa00b404}\label{namespacelogic__guit_a5214369c998606c2ecce97ffaa00b404}} 
+\index{logic\_guit@{logic\_guit}!condizione@{condizione}}
+\index{condizione@{condizione}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{condizione}{condizione}}
+{\footnotesize\ttfamily int logic\+\_\+guit.\+condizione = 0}
+
+
+
+For each chunk (i) we iterate over the 51 notes (j) 
+
+Resetting the variables.
+
+data.\+T is data transposed meaning the 51 possible notes ~\newline
+ I create the vector of relative maximums vectnote and vectplot (used only for plotting) and then I check the memoria variable to evaluate if increasing or not the stability index exist
+
+Then I iterate againg over the possible notes
+
+for evaluating the various conditions \mbox{\Hypertarget{namespacelogic__guit_aab440dda5ca9ea6af5b5a38eed329dcb}\label{namespacelogic__guit_aab440dda5ca9ea6af5b5a38eed329dcb}} 
+\index{logic\_guit@{logic\_guit}!data@{data}}
+\index{data@{data}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+data = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_ad7f8b690bf5c01b1a17339f39cce5282}{arg2}})}
+
+\mbox{\Hypertarget{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}\label{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}} 
+\index{logic\_guit@{logic\_guit}!datafft@{datafft}}
+\index{datafft@{datafft}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{datafft}{datafft}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+datafft = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_a2f10e5368af4728d3162d84b1bc52a97}{arg1}})}
+
+\mbox{\Hypertarget{namespacelogic__guit_a2e1751c1193037026f51f5a612675104}\label{namespacelogic__guit_a2e1751c1193037026f51f5a612675104}} 
+\index{logic\_guit@{logic\_guit}!dummywarn@{dummywarn}}
+\index{dummywarn@{dummywarn}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{dummywarn}{dummywarn}}
+{\footnotesize\ttfamily int logic\+\_\+guit.\+dummywarn = 0}
+
+\mbox{\Hypertarget{namespacelogic__guit_a6e28eaf7807679acc1c62dd6123f55ca}\label{namespacelogic__guit_a6e28eaf7807679acc1c62dd6123f55ca}} 
+\index{logic\_guit@{logic\_guit}!env@{env}}
+\index{env@{env}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{env}{env}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+env = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_af0a5e727876a5cca6302c90e45d47723}{arg4}})}
+
+\mbox{\Hypertarget{namespacelogic__guit_adfe6472cdd98506d122df59f8fb7fc79}\label{namespacelogic__guit_adfe6472cdd98506d122df59f8fb7fc79}} 
+\index{logic\_guit@{logic\_guit}!envprev@{envprev}}
+\index{envprev@{envprev}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{envprev}{envprev}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+envprev = 10.\+0}
+
+\mbox{\Hypertarget{namespacelogic__guit_a8f9ac2ac6d655ffbd6aa6bc975227576}\label{namespacelogic__guit_a8f9ac2ac6d655ffbd6aa6bc975227576}} 
+\index{logic\_guit@{logic\_guit}!exist@{exist}}
+\index{exist@{exist}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{exist}{exist}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+exist = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_aa7b2a4565b9a69669bcf525603231e68}\label{namespacelogic__guit_aa7b2a4565b9a69669bcf525603231e68}} 
+\index{logic\_guit@{logic\_guit}!existplot@{existplot}}
+\index{existplot@{existplot}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{existplot}{existplot}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+existplot = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a49b0c08a2e2bf73f4611c5d58505969a}\label{namespacelogic__guit_a49b0c08a2e2bf73f4611c5d58505969a}} 
+\index{logic\_guit@{logic\_guit}!existsum@{existsum}}
+\index{existsum@{existsum}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{existsum}{existsum}}
+{\footnotesize\ttfamily int logic\+\_\+guit.\+existsum = 0}
+
+\mbox{\Hypertarget{namespacelogic__guit_ad3221c6eb2f8c5025bc518cd1abfc0b6}\label{namespacelogic__guit_ad3221c6eb2f8c5025bc518cd1abfc0b6}} 
+\index{logic\_guit@{logic\_guit}!f@{f}}
+\index{f@{f}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{f}{f}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+f = open(\char`\"{}./algo\+\_\+outputs/names.\+txt\char`\"{},\char`\"{}r\char`\"{})}
+
+\mbox{\Hypertarget{namespacelogic__guit_a18310be06e67e38b5a393df64af897d0}\label{namespacelogic__guit_a18310be06e67e38b5a393df64af897d0}} 
+\index{logic\_guit@{logic\_guit}!freq@{freq}}
+\index{freq@{freq}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{freq}{freq}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+freq = genfromtxt(\char`\"{}./algo\+\_\+outputs/notes.\+txt\char`\"{})}
+
+\mbox{\Hypertarget{namespacelogic__guit_a46ae707935a93ef61e230ba58839a55b}\label{namespacelogic__guit_a46ae707935a93ef61e230ba58839a55b}} 
+\index{logic\_guit@{logic\_guit}!fund@{fund}}
+\index{fund@{fund}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{fund}{fund}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+fund = genfromtxt(\mbox{\hyperlink{namespacelogic__guit_ae3ff442529d90bd0a252c58e61a0df66}{arg3}})}
+
+\mbox{\Hypertarget{namespacelogic__guit_a3a33eaddcee7cbedb4c831c170844c8e}\label{namespacelogic__guit_a3a33eaddcee7cbedb4c831c170844c8e}} 
+\index{logic\_guit@{logic\_guit}!jvect@{jvect}}
+\index{jvect@{jvect}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{jvect}{jvect}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+jvect = \mbox{[}1.\+4\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a2601f78418094e5d85391001750fff65}\label{namespacelogic__guit_a2601f78418094e5d85391001750fff65}} 
+\index{logic\_guit@{logic\_guit}!labels@{labels}}
+\index{labels@{labels}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{labels}{labels}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+labels = f.\+readlines()}
+
+\mbox{\Hypertarget{namespacelogic__guit_a6e510f9dea3986a15557c1109ef8bd88}\label{namespacelogic__guit_a6e510f9dea3986a15557c1109ef8bd88}} 
+\index{logic\_guit@{logic\_guit}!memoria@{memoria}}
+\index{memoria@{memoria}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{memoria}{memoria}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+memoria = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a8c5f05a014ec4cd0b23642a2f624354c}\label{namespacelogic__guit_a8c5f05a014ec4cd0b23642a2f624354c}} 
+\index{logic\_guit@{logic\_guit}!minimo@{minimo}}
+\index{minimo@{minimo}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{minimo}{minimo}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+minimo = min(\mbox{\hyperlink{namespacelogic__guit_aed0a63126fad13e440d4e539400e047f}{vect}})}
+
+
+
+plot-\/only variables 
+
+\mbox{\Hypertarget{namespacelogic__guit_aea7bae2d67932bcd0031e6064d6c18ba}\label{namespacelogic__guit_aea7bae2d67932bcd0031e6064d6c18ba}} 
+\index{logic\_guit@{logic\_guit}!name@{name}}
+\index{name@{name}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+name = str(\mbox{\hyperlink{namespacelogic__guit_a2601f78418094e5d85391001750fff65}{labels}}\mbox{[}k\mbox{]}).split(\textquotesingle{}\textbackslash{}n\textquotesingle{})}
+
+\mbox{\Hypertarget{namespacelogic__guit_a6a9fced8da159e234ec5c9cd4c4efd4e}\label{namespacelogic__guit_a6a9fced8da159e234ec5c9cd4c4efd4e}} 
+\index{logic\_guit@{logic\_guit}!names@{names}}
+\index{names@{names}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{names}{names}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+names = \mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}\label{namespacelogic__guit_a3576c1648500bd0bb3c62835da32e0dd}} 
+\index{logic\_guit@{logic\_guit}!nota@{nota}}
+\index{nota@{nota}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{nota}{nota}}
+{\footnotesize\ttfamily string logic\+\_\+guit.\+nota = \char`\"{}Amag\+\_\+open\char`\"{}}
+
+
+
+nota and chitarra are useful to compose the name of the score file to load. 
+
+The scores are generated from the C++ algorithm and are moved to their folder by a script Here we are calling the four scores and extracting the data from them using the python module genfromtxt \mbox{\Hypertarget{namespacelogic__guit_a947b2d707fac24860ac2ac294812471b}\label{namespacelogic__guit_a947b2d707fac24860ac2ac294812471b}} 
+\index{logic\_guit@{logic\_guit}!pause@{pause}}
+\index{pause@{pause}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{pause}{pause}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+pause = 0.\+09}
+
+\mbox{\Hypertarget{namespacelogic__guit_a7a4bfac787802be16a2b199075a9131e}\label{namespacelogic__guit_a7a4bfac787802be16a2b199075a9131e}} 
+\index{logic\_guit@{logic\_guit}!portion@{portion}}
+\index{portion@{portion}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{portion}{portion}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+portion = int(len(\mbox{\hyperlink{namespacelogic__guit_aab440dda5ca9ea6af5b5a38eed329dcb}{data}})/4)}
+
+
+
+Portion is used to establish the duration of the plot. 
+
+It is defined as a fraction of the duration of the audiofile If we want to analyze a precise number of chunks, we need to insert that integer number \mbox{\Hypertarget{namespacelogic__guit_a9db8b11839004cf84257c48a05c17e69}\label{namespacelogic__guit_a9db8b11839004cf84257c48a05c17e69}} 
+\index{logic\_guit@{logic\_guit}!Pshp@{Pshp}}
+\index{Pshp@{Pshp}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{Pshp}{Pshp}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+Pshp = 1.\+03}
+
+\mbox{\Hypertarget{namespacelogic__guit_a78d3d7a0aa53e35f8009a062989e737a}\label{namespacelogic__guit_a78d3d7a0aa53e35f8009a062989e737a}} 
+\index{logic\_guit@{logic\_guit}!Pshs@{Pshs}}
+\index{Pshs@{Pshs}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{Pshs}{Pshs}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+Pshs = 1.\+025}
+
+\mbox{\Hypertarget{namespacelogic__guit_a26eb277ee4112ecbf2dd480cfd2ce6b8}\label{namespacelogic__guit_a26eb277ee4112ecbf2dd480cfd2ce6b8}} 
+\index{logic\_guit@{logic\_guit}!Pthp@{Pthp}}
+\index{Pthp@{Pthp}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{Pthp}{Pthp}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+Pthp = 0.\+6$\ast$\mbox{\hyperlink{namespacelogic__guit_af4b96858e294f3f3712b36f5b2bc6e66}{sens}}}
+
+\mbox{\Hypertarget{namespacelogic__guit_aac040e24f35fef9ab3d449da246f335a}\label{namespacelogic__guit_aac040e24f35fef9ab3d449da246f335a}} 
+\index{logic\_guit@{logic\_guit}!Pths@{Pths}}
+\index{Pths@{Pths}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{Pths}{Pths}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+Pths = 0.\+7$\ast$\mbox{\hyperlink{namespacelogic__guit_af4b96858e294f3f3712b36f5b2bc6e66}{sens}}}
+
+\mbox{\Hypertarget{namespacelogic__guit_a197d38a47cd64548065f7db9fd01faf6}\label{namespacelogic__guit_a197d38a47cd64548065f7db9fd01faf6}} 
+\index{logic\_guit@{logic\_guit}!ratio1@{ratio1}}
+\index{ratio1@{ratio1}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{ratio1}{ratio1}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+ratio1 = \mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j+12\mbox{]}/\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j-\/7\mbox{]}}
+
+\mbox{\Hypertarget{namespacelogic__guit_a6b4c418cac866bd6e323eb23053cde1e}\label{namespacelogic__guit_a6b4c418cac866bd6e323eb23053cde1e}} 
+\index{logic\_guit@{logic\_guit}!ratio2@{ratio2}}
+\index{ratio2@{ratio2}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{ratio2}{ratio2}}
+{\footnotesize\ttfamily tuple logic\+\_\+guit.\+ratio2 = (\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j+12\mbox{]}+\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j+19\mbox{]})$\ast$0.\+5/\mbox{\hyperlink{namespacelogic__guit_aa053df2fed89235686f1d9905edd2dba}{datafft}}\mbox{[}i,j-\/7\mbox{]}}
+
+\mbox{\Hypertarget{namespacelogic__guit_a7258ef9484e446c633949d0365001be2}\label{namespacelogic__guit_a7258ef9484e446c633949d0365001be2}} 
+\index{logic\_guit@{logic\_guit}!scarto@{scarto}}
+\index{scarto@{scarto}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{scarto}{scarto}}
+{\footnotesize\ttfamily int logic\+\_\+guit.\+scarto = 0}
+
+\mbox{\Hypertarget{namespacelogic__guit_af4b96858e294f3f3712b36f5b2bc6e66}\label{namespacelogic__guit_af4b96858e294f3f3712b36f5b2bc6e66}} 
+\index{logic\_guit@{logic\_guit}!sens@{sens}}
+\index{sens@{sens}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{sens}{sens}}
+{\footnotesize\ttfamily float logic\+\_\+guit.\+sens = 0.\+1}
+
+\mbox{\Hypertarget{namespacelogic__guit_a441ddc1ebeb79ef75a50c8a1dd42d8b1}\label{namespacelogic__guit_a441ddc1ebeb79ef75a50c8a1dd42d8b1}} 
+\index{logic\_guit@{logic\_guit}!time@{time}}
+\index{time@{time}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{time}{time}}
+{\footnotesize\ttfamily int logic\+\_\+guit.\+time = (i-\/\mbox{\hyperlink{namespacelogic__guit_a7258ef9484e446c633949d0365001be2}{scarto}}) $\ast$ 256 / 44100. $\ast$ 1000}
+
+\mbox{\Hypertarget{namespacelogic__guit_aed0a63126fad13e440d4e539400e047f}\label{namespacelogic__guit_aed0a63126fad13e440d4e539400e047f}} 
+\index{logic\_guit@{logic\_guit}!vect@{vect}}
+\index{vect@{vect}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{vect}{vect}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+vect = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a020b1f70904cc5a50ded2c2bae67017b}\label{namespacelogic__guit_a020b1f70904cc5a50ded2c2bae67017b}} 
+\index{logic\_guit@{logic\_guit}!vectcond@{vectcond}}
+\index{vectcond@{vectcond}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{vectcond}{vectcond}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+vectcond = \mbox{[}1.\+5\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a852f6a99bda2e8583f17b01bfa2a5744}\label{namespacelogic__guit_a852f6a99bda2e8583f17b01bfa2a5744}} 
+\index{logic\_guit@{logic\_guit}!vectfft@{vectfft}}
+\index{vectfft@{vectfft}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{vectfft}{vectfft}}
+{\footnotesize\ttfamily logic\+\_\+guit.\+vectfft = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a4dae7e6478476814840f240207526146}\label{namespacelogic__guit_a4dae7e6478476814840f240207526146}} 
+\index{logic\_guit@{logic\_guit}!vectmono@{vectmono}}
+\index{vectmono@{vectmono}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{vectmono}{vectmono}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+vectmono = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_a09aeabda8edddc4145add15c1940abe1}\label{namespacelogic__guit_a09aeabda8edddc4145add15c1940abe1}} 
+\index{logic\_guit@{logic\_guit}!vectnote@{vectnote}}
+\index{vectnote@{vectnote}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{vectnote}{vectnote}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+vectnote = \mbox{[}0\mbox{]}$\ast$51}
+
+\mbox{\Hypertarget{namespacelogic__guit_aa927411480b74fe553f9336dee16a9ad}\label{namespacelogic__guit_aa927411480b74fe553f9336dee16a9ad}} 
+\index{logic\_guit@{logic\_guit}!vectplot@{vectplot}}
+\index{vectplot@{vectplot}!logic\_guit@{logic\_guit}}
+\doxysubsubsection{\texorpdfstring{vectplot}{vectplot}}
+{\footnotesize\ttfamily list logic\+\_\+guit.\+vectplot = \mbox{[}0\mbox{]}$\ast$51}
+

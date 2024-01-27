@@ -1,0 +1,39 @@
+\hypertarget{fft__funct_8h}{}\doxysection{fft\+\_\+funct.\+h File Reference}
+\label{fft__funct_8h}\index{fft\_funct.h@{fft\_funct.h}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{fft__funct_8h_a751500033661e2f8c0b7e19b1574797c}{fft\+\_\+funct}} (float $\ast$buffer, int size, float tet, float f0, int nharms, int Fs)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{fft__funct_8h_a751500033661e2f8c0b7e19b1574797c}\label{fft__funct_8h_a751500033661e2f8c0b7e19b1574797c}} 
+\index{fft\_funct.h@{fft\_funct.h}!fft\_funct@{fft\_funct}}
+\index{fft\_funct@{fft\_funct}!fft\_funct.h@{fft\_funct.h}}
+\doxysubsubsection{\texorpdfstring{fft\_funct()}{fft\_funct()}}
+{\footnotesize\ttfamily void fft\+\_\+funct (\begin{DoxyParamCaption}\item[{float $\ast$}]{buffer,  }\item[{int}]{size,  }\item[{float}]{tet,  }\item[{float}]{f0,  }\item[{int}]{nharms,  }\item[{int}]{Fs }\end{DoxyParamCaption})}
+
+In the fft\+\_\+funct the first thing to do is to calculate the closest power of two to the size of the input vector. Then the new buffer size is called NC (in case the input vector\textquotesingle{}s dimension is already a power of two, then NC is equal to the input vector\textquotesingle{}s length) ~\newline
+
+
+Then another vector is calculated, it will be used for the parabolic interpolation and it is called fc\mbox{[}\mbox{]}
+
+The Goertzel algorithm is used to calculate the FFT, this algorithm uses decimation in time dividing the input sequence in blocks until each block contains only to samples to be combined, please read the document Tesina di informatica II.\+pdf for having a clearer understanding of the procedure ~\newline
+
+
+Xre is the rewritten input vector with inverted bit position (see the Goertzel algorithm), Xim is not calculated because in fact we don\textquotesingle{}t use the imaginary part
+
+The coefficient calculation Wre and Wim could have been done at the beginning
+
+The input buffer is overwritten with the amplitude of the fft points
+
+Here the closest peak calculation is performed in order to find the peaks on which the parabolic interpolation should be calculated ~\newline
+For each note (fc\mbox{[}\mbox{]}) we search the Fourier frequency (index\mbox{[}\mbox{]}) closest to the fundamental frequency of that note
+
+Then we pass to the parabola calculation the 3 points around that RTFI frequency and we calculate the parabola coefficients A, B and C ~\newline
+and use those coefficients to calculate the estimated amplitude of the RTFI frequency
+
+Finally we overwrite the Fourier output with the values corrected from the parabolic interpolation. ~\newline
+Indeed we don\textquotesingle{}t take full advantage of the parabolic interpolation which could be used to estimate the correct position in frequency of the point. This is a choice we made because we supposed that we don\textquotesingle{}t need to estimate the correct position in frequency of the peak because we already know it, that\textquotesingle{}s why we use the RTFI technique; but in case of the guitar this parabolic interpolation could be also used for estimating the correct frequency during \char`\"{}bendings\char`\"{} even tough we could be precise only on high pitched notes. ~\newline
+ Another thing that should be evaluated is the possibility to analyze a larger buffer, this should be done considering the CPU power we have at our disposal, from this Goertzel implementation documentation we have the complexity of the algorithm which is roughly NlogN

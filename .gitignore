@@ -30,3 +30,5 @@
 #Specific Folder
 build/
 nbproject/
+dist/
+.kdev4/

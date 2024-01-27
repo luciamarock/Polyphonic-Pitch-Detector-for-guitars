@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Audio Analyzer: resonators.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Audio Analyzer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Author: Luciano Ciamarone -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">resonators.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="resonators_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * To change this license header, choose License Headers in Project Properties.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * To change this template file, choose Tools | Templates</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * and open the template in the editor.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">/* </span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * File:   resonators.h</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> * Author: luciamarock</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> * Created on May 20, 2019, 11:14 PM</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifndef RESONATORS_H</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define RESONATORS_H</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="structTuple.html">   16</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structTuple.html">Tuple</a>{</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structTuple.html#aef688b6fbd4a06a5eb30fc5933506cfa">   17</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="structTuple.html#aef688b6fbd4a06a5eb30fc5933506cfa">a</a>[100];</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="structTuple.html#af2f1ebec775c0884a2fca29d4057b46e">   18</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="structTuple.html#af2f1ebec775c0884a2fca29d4057b46e">b</a>[100];</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="structTuple.html#af51f044cd9cefbbae1eff7a0569c8a68">   19</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="structTuple.html#af51f044cd9cefbbae1eff7a0569c8a68">c</a>[100];</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="structTuple.html#ac812847ee75ddac6a7e559998c1bb56a">   20</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="structTuple.html#ac812847ee75ddac6a7e559998c1bb56a">d</a>[100];</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    };</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">struct </span><a class="code" href="structTuple.html">Tuple</a> <a class="code" href="resonators_8h.html#ad7a6d52c8c80a6eca2e640439e4f3862">init</a>(int Fs, float f0, int nnotes, float tet);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RESONATORS_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="ttc" id="aresonators_8h_html_ad7a6d52c8c80a6eca2e640439e4f3862"><div class="ttname"><a href="resonators_8h.html#ad7a6d52c8c80a6eca2e640439e4f3862">init</a></div><div class="ttdeci">struct Tuple init(int Fs, float f0, int nnotes, float tet)</div><div class="ttdef"><b>Definition:</b> resonators.cpp:21</div></div>
+<div class="ttc" id="astructTuple_html"><div class="ttname"><a href="structTuple.html">Tuple</a></div><div class="ttdef"><b>Definition:</b> resonators.h:16</div></div>
+<div class="ttc" id="astructTuple_html_ac812847ee75ddac6a7e559998c1bb56a"><div class="ttname"><a href="structTuple.html#ac812847ee75ddac6a7e559998c1bb56a">Tuple::d</a></div><div class="ttdeci">float d[100]</div><div class="ttdef"><b>Definition:</b> resonators.h:20</div></div>
+<div class="ttc" id="astructTuple_html_aef688b6fbd4a06a5eb30fc5933506cfa"><div class="ttname"><a href="structTuple.html#aef688b6fbd4a06a5eb30fc5933506cfa">Tuple::a</a></div><div class="ttdeci">float a[100]</div><div class="ttdef"><b>Definition:</b> resonators.h:17</div></div>
+<div class="ttc" id="astructTuple_html_af2f1ebec775c0884a2fca29d4057b46e"><div class="ttname"><a href="structTuple.html#af2f1ebec775c0884a2fca29d4057b46e">Tuple::b</a></div><div class="ttdeci">float b[100]</div><div class="ttdef"><b>Definition:</b> resonators.h:18</div></div>
+<div class="ttc" id="astructTuple_html_af51f044cd9cefbbae1eff7a0569c8a68"><div class="ttname"><a href="structTuple.html#af51f044cd9cefbbae1eff7a0569c8a68">Tuple::c</a></div><div class="ttdeci">float c[100]</div><div class="ttdef"><b>Definition:</b> resonators.h:19</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.0
+</small></address>
+</body>
+</html>

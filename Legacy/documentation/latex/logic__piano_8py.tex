@@ -1,0 +1,157 @@
+\hypertarget{logic__piano_8py}{}\doxysection{logic\+\_\+piano.\+py File Reference}
+\label{logic__piano_8py}\index{logic\_piano.py@{logic\_piano.py}}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacelogic__piano}{logic\+\_\+piano}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacelogic__piano_a9c5575a7f6db08ad99690f45a3283a69}{logic\+\_\+piano.\+diagnostic}} (nbuffer, scoreout, vectplot, vectnote, vactmaxrel, energymin, fftmin, wait=8)
+\item 
+def \mbox{\hyperlink{namespacelogic__piano_a3395beb507d9dc1606f85de05e7ce4e8}{logic\+\_\+piano.\+print\+\_\+folding}} (segment, all\+\_\+data)
+\item 
+def \mbox{\hyperlink{namespacelogic__piano_a1d5c2513733891d5e0b0760710b0cad5}{logic\+\_\+piano.\+print\+\_\+correspondence}} (index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{namespacelogic__piano_ad0d98d1588acb8dce7fff899677df18b}{logic\+\_\+piano.\+note}} = \char`\"{}While\+\_\+my\+\_\+guitar\char`\"{}
+\begin{DoxyCompactList}\small\item\em note and instrument are useful to compose the name of the score file to load. \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespacelogic__piano_a5320537d1277613212c0a9945bf5d5f0}{logic\+\_\+piano.\+names}} = \mbox{[}\char`\"{}A\char`\"{},\char`\"{}A\#\char`\"{},\char`\"{}B\char`\"{},\char`\"{}C\char`\"{},\char`\"{}C\#\char`\"{},\char`\"{}D\char`\"{},\char`\"{}D\#\char`\"{},\char`\"{}E\char`\"{},\char`\"{}F\char`\"{},\char`\"{}F\#\char`\"{},\char`\"{}G\char`\"{},\char`\"{}G\#\char`\"{}\mbox{]}
+\item 
+string \mbox{\hyperlink{namespacelogic__piano_a1c124d27cb4929c747839a4d36fca4d3}{logic\+\_\+piano.\+instrument}} = \char`\"{}piano\char`\"{}
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a6b006766accff5e7bb65e0e9dc8e8dae}{logic\+\_\+piano.\+freq}} = genfromtxt(\char`\"{}./algo\+\_\+outputs/notes\+\_\+piano.\+txt\char`\"{})
+\item 
+string \mbox{\hyperlink{namespacelogic__piano_a1f24941cfbc77fe3b5e9d9dfb23c11ef}{logic\+\_\+piano.\+arg1}} = \char`\"{}./scores/\char`\"{} + instrument + \char`\"{}/\char`\"{} + note + \char`\"{}\+\_\+filefft.\+out\char`\"{}
+\item 
+string \mbox{\hyperlink{namespacelogic__piano_a2130bf41a6cb45c2c3f573415ed60f1f}{logic\+\_\+piano.\+arg2}} = \char`\"{}./scores/\char`\"{} + instrument + \char`\"{}/\char`\"{} + note + \char`\"{}\+\_\+filefilter.\+out\char`\"{}
+\item 
+string \mbox{\hyperlink{namespacelogic__piano_a66c8808629e5e11187633d3de6044d05}{logic\+\_\+piano.\+arg4}} = \char`\"{}./scores/\char`\"{} + instrument + \char`\"{}/\char`\"{} + note + \char`\"{}\+\_\+integer.\+out\char`\"{}
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a7768dbb51800b26192e1e68df5c7bad3}{logic\+\_\+piano.\+datafft}} = genfromtxt(arg1)
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a8e41577dd3e15fd38b0ef68f78c7b1a1}{logic\+\_\+piano.\+data}} = genfromtxt(arg2)
+\item 
+\mbox{\hyperlink{namespacelogic__piano_aa8e54015db3b25d5b58b8dd120cb153a}{logic\+\_\+piano.\+env}} = genfromtxt(arg4)
+\item 
+\mbox{\hyperlink{namespacelogic__piano_aad03221de7ef75cd423a6d47a03dc4e1}{logic\+\_\+piano.\+scoreout}} = open(\char`\"{}/home/luciamarock/Documents/cpp\+\_\+tests/Pitch\+Detector/src/integer.\+out\char`\"{}, \char`\"{}r\char`\"{})
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_abdd270d0f5499fed11bae1623846808f}{logic\+\_\+piano.\+midiscore}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a95c32657cdbe704830839e63728aebd9}{logic\+\_\+piano.\+temp}} = line.\+split(\char`\"{}\textbackslash{}n\char`\"{})
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a488014568550a8e4d357bddefe4702b5}{logic\+\_\+piano.\+line}} = temp\mbox{[}0\mbox{]}
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a1d136565e98a4ff9b5a57ce890990c53}{logic\+\_\+piano.\+elemout}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{namespacelogic__piano_abf673ca86d5da5deec2783f6b66370bc}{logic\+\_\+piano.\+elem}} = line.\+split(\char`\"{}\textbackslash{}t\char`\"{})
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_aab16aa404db7bc39d386f681f94fb6ae}{logic\+\_\+piano.\+envprev}} = 10.\+0
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_a1c291147b316a360b206e0f178b9c68c}{logic\+\_\+piano.\+noise\+\_\+threshold}} = 3.\+0
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_a7ba16ba3bec1829fa8d2a71c79617c12}{logic\+\_\+piano.\+sens}} = 5.\+0
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_a1de2ce56f4e56ebd835c5f6b138c6b38}{logic\+\_\+piano.\+firstharmth}} = 4.\+3/sens
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_af8e3e38d6d06f68b5d35240af9ea89b4}{logic\+\_\+piano.\+scndharmth}} = 3.\+999/sens
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_aebf988d7d104a92314481c55a51e8a33}{logic\+\_\+piano.\+rtfithreshold}} = 4.\+601162791/sens
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_a8613714508dede2b57c87421bf057884}{logic\+\_\+piano.\+stability\+\_\+threshold}} = 3.\+5 / sens
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a58a1328d97f5bdaf3f7707c16d21a836}{logic\+\_\+piano.\+vectgrey}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a18f293ec69062b552f40be880645c9d3}{logic\+\_\+piano.\+vectnote}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a8c88db38832aca73a3365576a1483ba2}{logic\+\_\+piano.\+vectplot}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_ae8c7664094c87c3326854b50d73faf22}{logic\+\_\+piano.\+memory}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_af554ce1a15cb18b265d1310ddb1ae137}{logic\+\_\+piano.\+exist}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_ac36b7fce1b62a95c62c714804f22a8dc}{logic\+\_\+piano.\+not\+\_\+presence}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_a373489e39d3d43152eac36696a619e07}{logic\+\_\+piano.\+allowance}} = 0.\+0
+\begin{DoxyCompactList}\small\item\em using the attack to enable / disable the allowance \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespacelogic__piano_a7eeac77a781dc3416a2a69afea6638e0}{logic\+\_\+piano.\+activenotes}} = 0
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_a95062e5cf04a87d7a11784e0df598b7e}{logic\+\_\+piano.\+pause}} = 0.\+09
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_a278babf8dab43fa54113ab2fc488cef9}{logic\+\_\+piano.\+dummywarn}} = 0
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a4b6cdd90d4fd022a481a9d9f3004794e}{logic\+\_\+piano.\+jvect}} = \mbox{[}1.\+4\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a1cfb6653276d9cc70e1ef147660414ca}{logic\+\_\+piano.\+vectfft}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a58259d671d1f96e0e94857ca78039951}{logic\+\_\+piano.\+vect}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a786e6ab16609ceb22b2418e93d0994b2}{logic\+\_\+piano.\+baseline}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_acfc2a06a36d09e8ae9346e4e6ffa139a}{logic\+\_\+piano.\+redline}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_ab0af81bd8c2c2d78371ba2dfb76f24d2}{logic\+\_\+piano.\+scndharmthline}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a9fdd4abf5f9533aa3af7e8c124f01d5b}{logic\+\_\+piano.\+rtfithresholdline}} = \mbox{[}0\mbox{]}$\ast$89
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_a3ca59c8bcdb5e66fe7462809b30ab821}{logic\+\_\+piano.\+exclude}} = 1
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_a5d453309b2dc5e617da7b84b276a2bc0}{logic\+\_\+piano.\+i2monitor}} = 943
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_a74f3f23baae0207ed3b201960e21ff59}{logic\+\_\+piano.\+j2monitor}} = 42
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a3683af543365345cec411c690509b89a}{logic\+\_\+piano.\+out\+\_\+f}} = open(\char`\"{}vectplot\+\_\+printout.\+txt\char`\"{}, \char`\"{}w\char`\"{})
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a3b189157c2af1aa1c36409d9275db64f}{logic\+\_\+piano.\+out\+\_\+n}} = open(\char`\"{}output\+\_\+evaluated\+\_\+printout.\+txt\char`\"{}, \char`\"{}w\char`\"{})
+\item 
+\mbox{\hyperlink{namespacelogic__piano_ac2a3e396465d18ec8ba0f0ddf38fa197}{logic\+\_\+piano.\+out\+\_\+s}} = open(\char`\"{}midiscore\+\_\+printout.\+txt\char`\"{}, \char`\"{}w\char`\"{})
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a0060d5fd1de9ef5c47d58887fae8cd89}{logic\+\_\+piano.\+portion}} = int(len(midiscore)/1.)
+\begin{DoxyCompactList}\small\item\em Portion is used to establish the duration of the plot. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespacelogic__piano_a5fa9f2865bfaaac3e171112212e24662}{logic\+\_\+piano.\+plot\+\_\+duration}} = 390
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_a98e15069aaef023376d1ab931436f02f}{logic\+\_\+piano.\+scarto}} = 0
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_ad39a5959f4c9acef414ec222a9516940}{logic\+\_\+piano.\+bluemax}} = 0
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_af8e1a8a2cb41cad544f32657f7501801}{logic\+\_\+piano.\+blueidx}} = -\/1
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_a8d3d2330726763f5050dc1a501da5144}{logic\+\_\+piano.\+fftmax}} = 0
+\begin{DoxyCompactList}\small\item\em For each chunk (i) we iterate over the 89 notes (j) \end{DoxyCompactList}\item 
+tuple \mbox{\hyperlink{namespacelogic__piano_a41e476b3399ff389685f17dc4f6d5f4e}{logic\+\_\+piano.\+time}} = (i-\/scarto) $\ast$ 256 / 44100. $\ast$ 1000
+\item 
+int \mbox{\hyperlink{namespacelogic__piano_a1db58e2a3ccb3909fd419b91db3f71ed}{logic\+\_\+piano.\+energymin}} = bluemax$\ast$rtfithreshold
+\begin{DoxyCompactList}\small\item\em Then I iterate againg over the possible notes. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespacelogic__piano_a00c1a872e3df7e9f4a8cd88c00cebbf0}{logic\+\_\+piano.\+fftmin}} = fftmax$\ast$firstharmth
+\item 
+bool \mbox{\hyperlink{namespacelogic__piano_a305e186b995673c65e7577a829dc6d58}{logic\+\_\+piano.\+NOpattern}} = False
+\item 
+tuple \mbox{\hyperlink{namespacelogic__piano_a528ab302b86e203329db3e89f4d0637b}{logic\+\_\+piano.\+avfft}} = (vectfft\mbox{[}j\mbox{]} + vectfft\mbox{[}j+12\mbox{]} + vectfft\mbox{[}j+19\mbox{]})/3.
+\item 
+tuple \mbox{\hyperlink{namespacelogic__piano_a419e3b3bb3debeec1da1e78227e837dd}{logic\+\_\+piano.\+avrfti}} = (vectnote\mbox{[}j\mbox{]} + vectnote\mbox{[}j+12\mbox{]} + data\mbox{[}i,j+19\mbox{]}/170)/3.
+\item 
+tuple \mbox{\hyperlink{namespacelogic__piano_af2fc85aa8b31cb3fb5fd2325e5af5565}{logic\+\_\+piano.\+totalenergy}} = avrfti $\ast$ avfft $\ast$ 2.
+\item 
+\mbox{\hyperlink{namespacelogic__piano_aeefa7af9f86646e4105547570fdeb750}{logic\+\_\+piano.\+maxrfti}} = n.\+max(vectplot)
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a49dc45331871e4055f91fefb6b3b1210}{logic\+\_\+piano.\+maxidx}} = n.\+argmax(vectplot)
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_a105faa40c1f216d7195d2058d03d3351}{logic\+\_\+piano.\+AVenergymin}} = maxrfti$\ast$stability\+\_\+threshold
+\item 
+float \mbox{\hyperlink{namespacelogic__piano_ada57f90b384f98bd90e6e197c9651bb9}{logic\+\_\+piano.\+attack}} = env\mbox{[}i\mbox{]}/envprev$\ast$0.\+5
+\begin{DoxyCompactList}\small\item\em calculating the attack based on the enevelopes at the current chunck and the one before \end{DoxyCompactList}\item 
+tuple \mbox{\hyperlink{namespacelogic__piano_aee4e056fa015ddf17af1197f888272e4}{logic\+\_\+piano.\+time\+\_\+from\+\_\+beginning}} = (i+1)/44100. $\ast$ 256
+\item 
+\mbox{\hyperlink{namespacelogic__piano_a3a40ec0564327a65a4fba91c7a6992c5}{logic\+\_\+piano.\+color}}
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a12ea973b95a9d7faa16b45580886ba36}{logic\+\_\+piano.\+th\+\_\+line}} = \mbox{[}$\,$\mbox{]}
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a72a72920a5cc22479408dd88d4742727}{logic\+\_\+piano.\+fft\+\_\+line}} = \mbox{[}$\,$\mbox{]}
+\item 
+list \mbox{\hyperlink{namespacelogic__piano_a9590258066d117a50e192adc92a4e2c9}{logic\+\_\+piano.\+vectcond}} = \mbox{[}1.\+5\mbox{]}$\ast$89
+\begin{DoxyCompactList}\small\item\em plot-\/only variables \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespacelogic__piano_aada367ef25ef56068b31406f25b66a2b}{logic\+\_\+piano.\+vectmono}} = \mbox{[}0\mbox{]}$\ast$89
+\end{DoxyCompactItemize}

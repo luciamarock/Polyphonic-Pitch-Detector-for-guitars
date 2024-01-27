@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Audio Analyzer: fft_funct.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Audio Analyzer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Author: Luciano Ciamarone -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle">
+<div class="title">fft_funct.h File Reference</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p><a href="fft__funct_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a751500033661e2f8c0b7e19b1574797c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fft__funct_8h.html#a751500033661e2f8c0b7e19b1574797c">fft_funct</a> (float *buffer, int size, float tet, float f0, int nharms, int Fs)</td></tr>
+<tr class="separator:a751500033661e2f8c0b7e19b1574797c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a751500033661e2f8c0b7e19b1574797c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751500033661e2f8c0b7e19b1574797c">&#9670;&nbsp;</a></span>fft_funct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void fft_funct </td>
+          <td>(</td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>tet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>f0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nharms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>Fs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>In the fft_funct the first thing to do is to calculate the closest power of two to the size of the input vector. Then the new buffer size is called NC (in case the input vector's dimension is already a power of two, then NC is equal to the input vector's length) <br  />
+</p>
+<p>Then another vector is calculated, it will be used for the parabolic interpolation and it is called fc[]</p>
+<p>The Goertzel algorithm is used to calculate the FFT, this algorithm uses decimation in time dividing the input sequence in blocks until each block contains only to samples to be combined, please read the document Tesina di informatica II.pdf for having a clearer understanding of the procedure <br  />
+</p>
+<p>Xre is the rewritten input vector with inverted bit position (see the Goertzel algorithm), Xim is not calculated because in fact we don't use the imaginary part</p>
+<p>The coefficient calculation Wre and Wim could have been done at the beginning</p>
+<p>The input buffer is overwritten with the amplitude of the fft points</p>
+<p>Here the closest peak calculation is performed in order to find the peaks on which the parabolic interpolation should be calculated <br  />
+For each note (fc[]) we search the Fourier frequency (index[]) closest to the fundamental frequency of that note</p>
+<p>Then we pass to the parabola calculation the 3 points around that RTFI frequency and we calculate the parabola coefficients A, B and C <br  />
+and use those coefficients to calculate the estimated amplitude of the RTFI frequency</p>
+<p>Finally we overwrite the Fourier output with the values corrected from the parabolic interpolation. <br  />
+Indeed we don't take full advantage of the parabolic interpolation which could be used to estimate the correct position in frequency of the point. This is a choice we made because we supposed that we don't need to estimate the correct position in frequency of the peak because we already know it, that's why we use the RTFI technique; but in case of the guitar this parabolic interpolation could be also used for estimating the correct frequency during "bendings" even tough we could be precise only on high pitched notes. <br  />
+ Another thing that should be evaluated is the possibility to analyze a larger buffer, this should be done considering the CPU power we have at our disposal, from this Goertzel implementation documentation we have the complexity of the algorithm which is roughly NlogN</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.0
+</small></address>
+</body>
+</html>

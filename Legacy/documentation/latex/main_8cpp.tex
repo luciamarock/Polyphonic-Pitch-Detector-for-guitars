@@ -1,0 +1,104 @@
+\hypertarget{main_8cpp}{}\doxysection{main.\+cpp File Reference}
+\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+Description of the main program.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$sndfile.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}streamer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}resonators.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}fft\+\_\+funct.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$fftw3.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8cpp_a0240ac851181b84ac374872dc5434ee4}{N}}~512
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Description of the main program. 
+
+Envelope Calculation\+:
+\begin{DoxyItemize}
+\item The loop calculates the envelope of the current chunk. The envelope is a smooth curve that captures the shape of the audio waveform. It\textquotesingle{}s often used to emphasize the overall shape or magnitude of a signal.
+\item The calculated envelope value is used in subsequent calculations and is written to an output file ({\ttfamily integer.\+out}).
+\end{DoxyItemize}
+
+FFT (Fast Fourier Transform)\+:
+\begin{DoxyItemize}
+\item The loop performs FFT on the current chunk using the {\ttfamily fft\+\_\+funct} function. FFT is a mathematical algorithm that transforms a time-\/domain signal (in this case, an audio chunk) into its frequency-\/domain representation.
+\item The FFT result is stored in the {\ttfamily myfft\+\_\+buffer} array for further analysis and is also used to calculate an averaged value, which is written to an output file ({\ttfamily filefft.\+out}).
+\end{DoxyItemize}
+
+RTFI Calculation\+:
+\begin{DoxyItemize}
+\item The loop calculates the Relative Temporal Feature Intensity (RTFI) for each RTFI note within the current chunk.
+\item It iterates over the samples in the chunk and performs calculations involving coefficients, input audio data ({\ttfamily buf}), and intermediate arrays ({\ttfamily rey}, {\ttfamily imgy}, {\ttfamily pry}, {\ttfamily iry}, {\ttfamily energy}).
+\end{DoxyItemize}
+
+Monophonic Detection\+:
+\begin{DoxyItemize}
+\item The loop performs monophonic detection on the current chunk. Monophonic detection involves identifying the dominant or primary note being played in the audio signal. The loop iterates over a range of possible note frequencies and calculates a \char`\"{}capture\char`\"{} value for each note\textquotesingle{}s wavelength.
+\item The note frequency that produces the maximum capture value is considered the detected monophonic note for the chunk. The detected note frequency is recorded in an output file ({\ttfamily monodet.\+out}).
+\item The calculated RTFI values are written to an output file ({\ttfamily filefilter.\+out}).
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+luciamarock 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+August 7th, 2023 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8cpp_a0240ac851181b84ac374872dc5434ee4}\label{main_8cpp_a0240ac851181b84ac374872dc5434ee4}} 
+\index{main.cpp@{main.cpp}!N@{N}}
+\index{N@{N}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily \#define N~512}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+sf is the pointer to the .wav file, library sndfile is used to open the WAV file.
+
+coefficients is a tuple returned by the init function of \mbox{\hyperlink{resonators_8cpp}{resonators.\+cpp}} the tuple contains 3 coefficients for calculating the RTFI resonators and the list of notes which are the center frequency of the resonators
+
+The samples\mbox{[}\mbox{]} vector contains the number of samples that describe an entire wavelength associated with each RTFI note at the specific Sampling Frequency, this is used later on in the mono detection algorithm
+
+nchunks is the number of chunks contained in the read audio file and it is received from function \mbox{\hyperlink{streamer_8cpp_ac09ea1f6f246b619c9d29b204efb4912}{chunker()}} in module \mbox{\hyperlink{streamer_8cpp}{streamer.\+cpp}} ~\newline
+It bases on the sampvect which is hard-\/coded to be 256 (N/2) samples
+
+Iterating on the input buffer (of dimension 256 samples) in order to build the vectors to be analyzed, the real data are contained in the vector buf which represent the entire audio file; the samples of the buf vector are always scaled by a factor of 2147483648 which is hard-\/coded ~\newline
+ The vector container\mbox{[}\mbox{]} is made of the concatenation of three consecutive buffers and it is used for the mono detection; its length is designed taking into account the maximum wavelength of the guitar which is at about 82 Hz ~\newline
+Vector myfft\+\_\+buffer\mbox{[}\mbox{]} is used for the computation of the FFT with my algorithm, it is composed by the last 4 buffers thus bringing the total amount of he vector equal to 1024 samples, so the fft is calculated on this vector. The fft is not really used to find the peaks, in fact we should have a calculation vector of 8192 to discriminate for real the partials at lowest frequencies, but it still can be relied on to find the correct amplitudes to the partials since the RTFIs take time to reflect the real amplitude of the partials, in the future the fft with parabolic interpolation can also be used for the tracking of bendings on th guitar. ~\newline
+ Finally integer is used to calculate the envelope of the buffers, it gets printed on a file called integer.\+out
+
+Next the \mbox{\hyperlink{fft__funct_8cpp_a751500033661e2f8c0b7e19b1574797c}{fft\+\_\+funct()}} is called which calculates the fft on the same vector that is passed to
+
+We then consider an averaged value with the former fft calculation and we print the values to the file filefft.\+out
+
+In the same loop of the RTFI calculation we perform also the monophonic detection. ~\newline
+The loop is on the RTFI frequencies and for the monophonic detection there is another sub-\/loop that searches inside the container\mbox{[}\mbox{]} vector summing up the 3 samples at distance samples\mbox{[}k\mbox{]} which is the wavelength (in samples) of the current note (RTFI frequency). For each note the maximum sum is memorized and then it is registered if superior of any other previous maximum. At the en of the main loop the wavelength which gave he maximum sum remains registered so we can state that was the monophonic note which was detected. This algorithm might suffer spurious spikes in the waveform and it works with clean waveforms at best and with a rapid dacay ~\newline
+
+
+The RTFI calculation is performed and the values are written in the file filefilter.\+out ~\newline
+The monophonic detection instead is printed on the file monodet.\+out

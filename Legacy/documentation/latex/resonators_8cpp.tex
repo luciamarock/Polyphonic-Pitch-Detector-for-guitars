@@ -1,0 +1,28 @@
+\hypertarget{resonators_8cpp}{}\doxysection{resonators.\+cpp File Reference}
+\label{resonators_8cpp}\index{resonators.cpp@{resonators.cpp}}
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include \char`\"{}resonators.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$fftw3.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structTuple}{Tuple}} \mbox{\hyperlink{resonators_8cpp_ad7a6d52c8c80a6eca2e640439e4f3862}{init}} (int Fs, float f0, int nnotes, float tet)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{resonators_8cpp_ad7a6d52c8c80a6eca2e640439e4f3862}\label{resonators_8cpp_ad7a6d52c8c80a6eca2e640439e4f3862}} 
+\index{resonators.cpp@{resonators.cpp}!init@{init}}
+\index{init@{init}!resonators.cpp@{resonators.cpp}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structTuple}{Tuple}} init (\begin{DoxyParamCaption}\item[{int}]{Fs,  }\item[{float}]{f0,  }\item[{int}]{nnotes,  }\item[{float}]{tet }\end{DoxyParamCaption})}
+
+This init function is called directly from the \mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main()}} program at the beginning it loops until nharms (which in this case is 70) in order to calculate the center frequencies for the RTFI resonators, the f0 is also hard coded and it\textquotesingle{}s set to 77.\+782 Hz for the Guitar. The notes vector is returned as coefficent d All of these parameters should be read from a configuration file instead of being hard-\/coded
+
+Finally the coefficients for the RTFI resonators are calculated, no mistery in this block just a bit of math. ~\newline

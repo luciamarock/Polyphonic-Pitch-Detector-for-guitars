@@ -1,0 +1,20 @@
+\hypertarget{streamer_8cpp}{}\doxysection{streamer.\+cpp File Reference}
+\label{streamer_8cpp}\index{streamer.cpp@{streamer.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}streamer.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{streamer_8cpp_ac09ea1f6f246b619c9d29b204efb4912}{chunker}} (int buffdim, int elemcount)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{streamer_8cpp_ac09ea1f6f246b619c9d29b204efb4912}\label{streamer_8cpp_ac09ea1f6f246b619c9d29b204efb4912}} 
+\index{streamer.cpp@{streamer.cpp}!chunker@{chunker}}
+\index{chunker@{chunker}!streamer.cpp@{streamer.cpp}}
+\doxysubsubsection{\texorpdfstring{chunker()}{chunker()}}
+{\footnotesize\ttfamily int chunker (\begin{DoxyParamCaption}\item[{int}]{buffdim,  }\item[{int}]{elemcount }\end{DoxyParamCaption})}
+
+This function basically divides the total length (in number of samples) of the audio file in input by the length of the chosen samples buffer, in this case 256, this way we obtain the number of buffers contained in the audio file. ~\newline
+ There is of course a bunch of remaining samples this can be ignored, in fact they are not returned, the calculation was made just for educational purposes because it is done calling another function

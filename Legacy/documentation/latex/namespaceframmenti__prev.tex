@@ -1,0 +1,153 @@
+\hypertarget{namespaceframmenti__prev}{}\doxysection{frammenti\+\_\+prev Namespace Reference}
+\label{namespaceframmenti__prev}\index{frammenti\_prev@{frammenti\_prev}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceframmenti__prev_acd56808c811dd812c8c5c214c8cfaca7}{rotate}} (\mbox{\hyperlink{namespaceframmenti__prev_a147997f2c15109ae9cf850368ba46a13}{average}}, new\+\_\+value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{namespaceframmenti__prev_a03ac177aecf0c8fc58bdcc9903cf94b3}{instrument}} = \char`\"{}piano\char`\"{}
+\item 
+string \mbox{\hyperlink{namespaceframmenti__prev_a1612c5130afb3e500d1d93eb410af7c9}{note}} = \char`\"{}Beat\+\_\+\+It\+\_\+cut\char`\"{}
+\item 
+float \mbox{\hyperlink{namespaceframmenti__prev_aeb19779259d4d1fb1b059709235f2a7c}{MOVING\+\_\+\+AVARAGE\+\_\+P}} = 0.\+1
+\item 
+float \mbox{\hyperlink{namespaceframmenti__prev_af1bae9c58a215cd3c4524877eb67cc48}{ATTACK\+\_\+\+FACTOR}} = 0.\+6
+\item 
+list \mbox{\hyperlink{namespaceframmenti__prev_a147997f2c15109ae9cf850368ba46a13}{average}} = \mbox{[}0.\mbox{]} $\ast$ 20
+\item 
+list \mbox{\hyperlink{namespaceframmenti__prev_acf9dff85252b1318fc23c916c353dcfd}{moving\+\_\+avg}} = \mbox{[}$\,$\mbox{]}
+\item 
+list \mbox{\hyperlink{namespaceframmenti__prev_ad046b02d862db313ac7c9b5e7413a245}{moving\+\_\+avg\+\_\+mia}} = \mbox{[}$\,$\mbox{]}
+\item 
+list \mbox{\hyperlink{namespaceframmenti__prev_af97943e7311f7cbb2e3015d9666a7f97}{threshold}} = \mbox{[}$\,$\mbox{]}
+\item 
+float \mbox{\hyperlink{namespaceframmenti__prev_a31ad7c89a5f02e3eaa10f69ef5f723a4}{value}} = 0.\+05
+\item 
+list \mbox{\hyperlink{namespaceframmenti__prev_a37448ce22b56645f18deb9c464b30cbd}{real\+\_\+signal}} = \mbox{[}$\,$\mbox{]}
+\item 
+float \mbox{\hyperlink{namespaceframmenti__prev_ab7b2ed1246c549772f6c95a4d28acf21}{p}} = \mbox{\hyperlink{namespaceframmenti__prev_aeb19779259d4d1fb1b059709235f2a7c}{MOVING\+\_\+\+AVARAGE\+\_\+P}};
+\item 
+\mbox{\hyperlink{namespaceframmenti__prev_af50d8e4da7c86ba259f5efacb8f7879a}{value\+\_\+mio}}
+\item 
+\mbox{\hyperlink{namespaceframmenti__prev_a8e093c5a78b68b2468691cf1f2a8e15f}{th}} = pow(\mbox{\hyperlink{namespaceframmenti__prev_a37448ce22b56645f18deb9c464b30cbd}{real\+\_\+signal}}\mbox{[}i\mbox{]},2) / \mbox{\hyperlink{namespaceframmenti__prev_af50d8e4da7c86ba259f5efacb8f7879a}{value\+\_\+mio}}
+\item 
+\mbox{\hyperlink{namespaceframmenti__prev_a21d095149c011bffd69e41aa2e5c34b7}{color}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}        if note:
+            if vectplot[note-20] == 0:
+                _event_buffer[note - 20] = _event_buffer[note - 20] + 10
+
+
+
+            if note + 20 in scoreout: # the note is preset in the score 
+                out_n.write("\t" + str(note + 20))
+                _event_buffer[note] = 100
+            elif note + 1 in scoreout: # this could be a second harmonic 
+                seconds.append(note + 20)
+            elif note + 8 in scoreout and note + 27 in seconds: # this could be a first harmonic
+                firsts.append(note + 20)
+        elif _event_buffer[note] < 100 and _event_buffer[note]/10 > wait:
+            out_n.write("\t!" + str(note + 20))
+            _event_buffer[note] = 0\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceframmenti__prev_acd56808c811dd812c8c5c214c8cfaca7}\label{namespaceframmenti__prev_acd56808c811dd812c8c5c214c8cfaca7}} 
+\index{frammenti\_prev@{frammenti\_prev}!rotate@{rotate}}
+\index{rotate@{rotate}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily def frammenti\+\_\+prev.\+rotate (\begin{DoxyParamCaption}\item[{}]{average,  }\item[{}]{new\+\_\+value }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceframmenti__prev_af1bae9c58a215cd3c4524877eb67cc48}\label{namespaceframmenti__prev_af1bae9c58a215cd3c4524877eb67cc48}} 
+\index{frammenti\_prev@{frammenti\_prev}!ATTACK\_FACTOR@{ATTACK\_FACTOR}}
+\index{ATTACK\_FACTOR@{ATTACK\_FACTOR}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{ATTACK\_FACTOR}{ATTACK\_FACTOR}}
+{\footnotesize\ttfamily float frammenti\+\_\+prev.\+ATTACK\+\_\+\+FACTOR = 0.\+6}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_a147997f2c15109ae9cf850368ba46a13}\label{namespaceframmenti__prev_a147997f2c15109ae9cf850368ba46a13}} 
+\index{frammenti\_prev@{frammenti\_prev}!average@{average}}
+\index{average@{average}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{average}{average}}
+{\footnotesize\ttfamily frammenti\+\_\+prev.\+average = \mbox{[}0.\mbox{]} $\ast$ 20}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_a21d095149c011bffd69e41aa2e5c34b7}\label{namespaceframmenti__prev_a21d095149c011bffd69e41aa2e5c34b7}} 
+\index{frammenti\_prev@{frammenti\_prev}!color@{color}}
+\index{color@{color}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily frammenti\+\_\+prev.\+color}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_a03ac177aecf0c8fc58bdcc9903cf94b3}\label{namespaceframmenti__prev_a03ac177aecf0c8fc58bdcc9903cf94b3}} 
+\index{frammenti\_prev@{frammenti\_prev}!instrument@{instrument}}
+\index{instrument@{instrument}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{instrument}{instrument}}
+{\footnotesize\ttfamily string frammenti\+\_\+prev.\+instrument = \char`\"{}piano\char`\"{}}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_aeb19779259d4d1fb1b059709235f2a7c}\label{namespaceframmenti__prev_aeb19779259d4d1fb1b059709235f2a7c}} 
+\index{frammenti\_prev@{frammenti\_prev}!MOVING\_AVARAGE\_P@{MOVING\_AVARAGE\_P}}
+\index{MOVING\_AVARAGE\_P@{MOVING\_AVARAGE\_P}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{MOVING\_AVARAGE\_P}{MOVING\_AVARAGE\_P}}
+{\footnotesize\ttfamily float frammenti\+\_\+prev.\+MOVING\+\_\+\+AVARAGE\+\_\+P = 0.\+1}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_acf9dff85252b1318fc23c916c353dcfd}\label{namespaceframmenti__prev_acf9dff85252b1318fc23c916c353dcfd}} 
+\index{frammenti\_prev@{frammenti\_prev}!moving\_avg@{moving\_avg}}
+\index{moving\_avg@{moving\_avg}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{moving\_avg}{moving\_avg}}
+{\footnotesize\ttfamily frammenti\+\_\+prev.\+moving\+\_\+avg = \mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_ad046b02d862db313ac7c9b5e7413a245}\label{namespaceframmenti__prev_ad046b02d862db313ac7c9b5e7413a245}} 
+\index{frammenti\_prev@{frammenti\_prev}!moving\_avg\_mia@{moving\_avg\_mia}}
+\index{moving\_avg\_mia@{moving\_avg\_mia}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{moving\_avg\_mia}{moving\_avg\_mia}}
+{\footnotesize\ttfamily list frammenti\+\_\+prev.\+moving\+\_\+avg\+\_\+mia = \mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_a1612c5130afb3e500d1d93eb410af7c9}\label{namespaceframmenti__prev_a1612c5130afb3e500d1d93eb410af7c9}} 
+\index{frammenti\_prev@{frammenti\_prev}!note@{note}}
+\index{note@{note}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{note}{note}}
+{\footnotesize\ttfamily string frammenti\+\_\+prev.\+note = \char`\"{}Beat\+\_\+\+It\+\_\+cut\char`\"{}}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_ab7b2ed1246c549772f6c95a4d28acf21}\label{namespaceframmenti__prev_ab7b2ed1246c549772f6c95a4d28acf21}} 
+\index{frammenti\_prev@{frammenti\_prev}!p@{p}}
+\index{p@{p}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{p}{p}}
+{\footnotesize\ttfamily float frammenti\+\_\+prev.\+p = \mbox{\hyperlink{namespaceframmenti__prev_aeb19779259d4d1fb1b059709235f2a7c}{MOVING\+\_\+\+AVARAGE\+\_\+P}};}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_a37448ce22b56645f18deb9c464b30cbd}\label{namespaceframmenti__prev_a37448ce22b56645f18deb9c464b30cbd}} 
+\index{frammenti\_prev@{frammenti\_prev}!real\_signal@{real\_signal}}
+\index{real\_signal@{real\_signal}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{real\_signal}{real\_signal}}
+{\footnotesize\ttfamily frammenti\+\_\+prev.\+real\+\_\+signal = \mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_a8e093c5a78b68b2468691cf1f2a8e15f}\label{namespaceframmenti__prev_a8e093c5a78b68b2468691cf1f2a8e15f}} 
+\index{frammenti\_prev@{frammenti\_prev}!th@{th}}
+\index{th@{th}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{th}{th}}
+{\footnotesize\ttfamily frammenti\+\_\+prev.\+th = pow(\mbox{\hyperlink{namespaceframmenti__prev_a37448ce22b56645f18deb9c464b30cbd}{real\+\_\+signal}}\mbox{[}i\mbox{]},2) / \mbox{\hyperlink{namespaceframmenti__prev_af50d8e4da7c86ba259f5efacb8f7879a}{value\+\_\+mio}}}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_af97943e7311f7cbb2e3015d9666a7f97}\label{namespaceframmenti__prev_af97943e7311f7cbb2e3015d9666a7f97}} 
+\index{frammenti\_prev@{frammenti\_prev}!threshold@{threshold}}
+\index{threshold@{threshold}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{threshold}{threshold}}
+{\footnotesize\ttfamily list frammenti\+\_\+prev.\+threshold = \mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_a31ad7c89a5f02e3eaa10f69ef5f723a4}\label{namespaceframmenti__prev_a31ad7c89a5f02e3eaa10f69ef5f723a4}} 
+\index{frammenti\_prev@{frammenti\_prev}!value@{value}}
+\index{value@{value}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily float frammenti\+\_\+prev.\+value = 0.\+05}
+
+\mbox{\Hypertarget{namespaceframmenti__prev_af50d8e4da7c86ba259f5efacb8f7879a}\label{namespaceframmenti__prev_af50d8e4da7c86ba259f5efacb8f7879a}} 
+\index{frammenti\_prev@{frammenti\_prev}!value\_mio@{value\_mio}}
+\index{value\_mio@{value\_mio}!frammenti\_prev@{frammenti\_prev}}
+\doxysubsubsection{\texorpdfstring{value\_mio}{value\_mio}}
+{\footnotesize\ttfamily frammenti\+\_\+prev.\+value\+\_\+mio}
+
