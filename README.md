@@ -2,7 +2,34 @@
 
 This repository hosts a pitch detection application designed for Linux systems, specifically tailored for guitar input. The underlying methodology is based on complex resonators and is optimized for accurate pitch estimation. The theoretical foundation of complex resonators can be found in the article titled "A Computationally Efficient Method for Polyphonic Pitch Estimation" authored by Ruohua Zhou, Joshua D. Reiss, Marco Mattavelli, and Giorgio Zoia.
 
-The system is currently in a developmental phase to incorporate frequency domain effects as demonstrated on the page ["My Project Showcase"](http://lushmaroon.altervista.org/my-project.html?cb=1495296000881).
+The system is currently in a developmental phase to incorporate frequency domain effects as demonstrated on the page ["My Project Showcase"](http://lushmaroon.altervista.org/my-project.html?cb=1495296000881).  
+  
+## Files Description  
+  
+1. **pdct_config.h.in:**
+   This file is a configuration template for the pdct project. It defines version numbers, project name, and some platform-specific settings.
+
+2. **log_config.h.in:**
+   Similar to pdct_config.h.in, this file is a configuration template specifically for logging settings in the project.
+
+3. **CMakeLists.txt:**
+   This is the main CMake configuration file for the project. Here's a summary of what it does:
+
+   - It sets the minimum required CMake version to 2.6.
+   - It defines the project name as "pdct."
+   - It defines various options such as debugging, release, and logging options.
+   - It sets the version numbers for the project.
+   - It configures hardware-related settings such as SSE and threading.
+   - It sets compiler flags for different build types (Debug, Release, RelWithDebInfo).
+   - It checks for the existence of certain libraries (pthread, asound) using CMake's `CHECK_LIBRARY_EXISTS` macro.
+   - It finds and includes the wxWidgets library.
+   - It configures header files (`pdct_config.h` and `log_config.h`) using the corresponding template files.
+   - It includes directories and subdirectories for building the project.
+   - It creates an executable named "pdct" and links it with various libraries.
+   - It sets up installation targets and packaging information for CPack.
+   - It defines custom targets for cleaning CMake files and cleaning all.
+
+The CMakeLists.txt file essentially provides instructions to CMake on how to generate the build files, compile the project, and install the resulting executable.
 
 ## Build Instructions
 
