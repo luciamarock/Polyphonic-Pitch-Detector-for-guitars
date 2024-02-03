@@ -1,0 +1,21 @@
+
+Come applicare condizioni decisionali basandosi sull'energia (o altro) con lo scopo di ripulire il vettore dei candidati a questo stadio del processo:
+
+vecchi approcci:
+
+piano:
+	j<70 and vectnote[j] > energymin and vectnote[j+12] > vectnote[j]*firstharmth and vectnote[j+19] > vectnote[j]*scndharmth
+chitarra:
+	(j < (len(data.T)-20) and 
+        vectnote[j] > 0.0 and 
+        vectnote[j+12] > vectnote[j]*Pshp*(1.0-Pthp) and 		--> Pshp*(1.0-Pthp) = firstharmth_min  (Fmin) = 0.9682
+        vectnote[j+12] < vectnote[j]*Pshp*(1.0+Pthp) and 		--> Pshp*(1.0+Pthp) = firstharmth_max  (Fmax) = 1.0918
+        vectnote[j+19] > vectnote[j]*Pshs*(1.0-Pths) and 		--> Pshs*(1.0-Pths) = scndharmth_min   (Smin) = 0.95325
+        vectnote[j+19] < vectnote[j]*Pshs*(1.0+Pths)			--> Pshs*(1.0+Pths) = scndharmth_max   (Smax) = 1.09675
+
+	-----------------------------------------------------------------------------------------------------------------------
+
+output.log rappresenta i casi in cui la nota attesa e' presente nei massimi relativi ma non ci sono le condizioni minime per dire che e' plausibile 
+		(le "condizioni minime" a questo stato dello sviluppo sarebbero 1- esiste il pattern, 2 - il pattern rispetta le soglie)
+case_Prs_42.txt e' un piccolo estratto di candidates.log che ho fatto per comodita' di studio di quel caso particolare, ho scelto quello per il gran numero di candidati
+
