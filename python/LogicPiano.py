@@ -26,7 +26,7 @@ class LogicPiano:
         self.AVenergymin = 0.0
         self.NOpattern = 0
         self.exist = [0] * NNOTES
-        self.weights_prev = [0] * NNOTES
+        self.weights_prev = [0] * NHARMS
         self.activenotes = 0
         self.a_logic = [0] * NNOTES
         self._output = [0] * NNOTES
@@ -56,17 +56,20 @@ class LogicPiano:
     
     def get_min_max_idx_peacks(self):
         return self.minp, self.maxp
+    
+    def get_test_element(self):
+        return self.test
 
     def process_logic(self, data_rtfi, data_fft, allowance, a_score, m_strict_mode, a_towrite, periodicity, top_matches, spectralCentroid):
-        bluemax = 0.0
-        redmax = 0.0
+        #bluemax = 0.0
+        #redmax = 0.0
         if spectralCentroid > 1.:
             midi_temp = 12 * math.log(spectralCentroid/440., 2) + 69
             midiCentroid = int(round(midi_temp))
         else:
             midiCentroid = index_to_MIDI + 1
         #bluemax, blueidx = self.find_max(data_rtfi)
-        self.energymin = bluemax * rtfithreshold
+        #self.energymin = bluemax * rtfithreshold
         fft_avg, fft_Wavg, rtfi_avg, rtfi_Wagv, rtfi_max, maxidx, rtfi_min, minidx = self.new_find_max(data_rtfi, data_fft)
         value = (rtfi_max + rtfi_min)/2.
         #formatted_value = "%.6f" % value
@@ -74,11 +77,20 @@ class LogicPiano:
         self.avg_rtfi = value
         self.minp = minidx
         self.maxp = maxidx
+        
         weights_current = self.vectplot_contains_candidates(rtfi_Wagv, periodicity, top_matches)
-        self.logic_temp = copy.copy(self.vectplot)
-        self.logic_final = rtfi_Wagv
+        
+        self.logic_temp = copy.copy(rtfi_Wagv)
+
+        self.test = copy.copy(weights_current)
+
+        weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx = self.calculate_energy(weights_current, fft_avg, rtfi_Wagv, midiCentroid)
+        #formatted_value = "%.6f" % weights_current[35]
+        #string = "test " + formatted_value
+        #print(string)
+        self.logic_final = copy.copy(weights_current)
         #redmax = self.process_vect_note_and_vect_plot(data_fft, data_rtfi, self.energymin, blueidx, allowance,top_matches, periodicity)
-        self.AVenergymin = redmax * stability_threshold
+        #self.AVenergymin = redmax * stability_threshold
         self.activenotes = 0
         self.a_logic = [0] * NNOTES
         #a_relmax = [0] * NNOTES
@@ -147,8 +159,26 @@ class LogicPiano:
                 rtfi_Wagv.append(AVG)
         
         return fft_avg, fft_Wavg, rtfi_avg, rtfi_Wagv, rtfi_max, maxidx, rtfi_min, minidx
+    
+    def find_max_rel(self, rtfi_Wavg):
+        rtfi_peaks = [0.0] * NNOTES
+        fft_peaks = [0.0] * NHARMS
+        for i in range(NHARMS):
+            if i > 0 and i < NNOTES - 1:
+                sx = rtfi_Wavg[i] - rtfi_Wavg[i-1]
+                dx = rtfi_Wavg[i] - rtfi_Wavg[i+1]
+                if sx > 0 and dx >0:
+                    rtfi_peaks[i] = rtfi_Wavg[i]
+            if i > 0 and i < NHARMS - 1:
+                sx = self.vectfft[i] - self.vectfft[i-1]
+                dx = self.vectfft[i] - self.vectfft[i+1]
+                if sx > 0 and dx >0:
+                    fft_peaks[i] =  self.vectfft[i]
+        
+        return rtfi_peaks, fft_peaks
 
     def vectplot_contains_candidates(self, rtfi_Wavg, periodicity, top_matches):   
+        rtfi_peaks, fft_peaks = self.find_max_rel(rtfi_Wavg)
         weights_current = [0.0] * NHARMS
         waveindex = int(periodicity) - index_to_MIDI
         if waveindex > -1 and waveindex < NHARMS:
@@ -166,16 +196,14 @@ class LogicPiano:
         Smax = 1 + pSmax
         Smin = 1 - pSmin 
         for i in range(NHARMS):
-            if i > 0 and i < NNOTES - 1:
-                sx = rtfi_Wavg[i] - rtfi_Wavg[i-1]
-                dx = rtfi_Wavg[i] - rtfi_Wavg[i+1]
-                if sx > 0 and dx >0:
+            if i < NNOTES:
+                if rtfi_peaks[i] > 0:
                     first_max = rtfi_Wavg[i]/Fmin 
                     first_min = rtfi_Wavg[i]/Fmax
                     second_max = rtfi_Wavg[i]/Smin
                     second_min = rtfi_Wavg[i]/Smax
                     if i + 19 < NNOTES - 1:
-                        if (self.vectnote[i+12] > 0 or self.vectfft[i+12] > 0) and (self.vectnote[i+19] > 0 or self.vectfft[i+19]>0):
+                        if (rtfi_peaks[i+12] > 0 or fft_peaks[i+12] > 0) and (rtfi_peaks[i+19] > 0 or fft_peaks[i+19]>0):
                             if rtfi_Wavg[i+12] > first_min and rtfi_Wavg[i+12] < first_max and rtfi_Wavg[i+19] > second_min and rtfi_Wavg[i+19] < second_max:
                                 self.vectplot[i] = rtfi_Wavg[i]
                                 weights_current[i] = weights_current[i] + 2.
@@ -184,7 +212,7 @@ class LogicPiano:
                         else:
                             self.vectplot[i] = 0.0
                     elif i + 12 < NNOTES - 1:
-                        if self.vectnote[i+12] > 0 or self.vectfft[i+12] > 0:
+                        if rtfi_peaks[i+12] > 0 or fft_peaks[i+12] > 0:
                             if rtfi_Wavg[i+12] > first_min and rtfi_Wavg[i+12] < first_max:
                                 self.vectplot[i] = rtfi_Wavg[i]
                                 weights_current[i] = weights_current[i] + 2.
@@ -197,13 +225,65 @@ class LogicPiano:
                         weights_current[i] = weights_current[i] + 2.
                 else:
                     self.vectplot[i] = 0.0
-            elif i < NNOTES:
-                self.vectplot[i] = 0.0
             else:
                 self.vectfft[i] = self.vectfft[i] * 1.0
 
         return weights_current
+    
+    def scale_rtfiWavg(self, rtfi_Wavg):
+        return_vect = []
+        for value in rtfi_Wavg:
+            value = value - 0.75 
+            if value < 0.:
+                value = 0.0
+            return_vect.append(value)
+        return return_vect 
 
+    def calculate_energy(self, weights_current, avg_simple_fft, rtfi_Wagv, midiCentroid):
+        scaled_vect = self.scale_rtfiWavg(rtfi_Wagv)
+        p = sens / 10. 
+        max_general = 0.0
+        max_general_idx = -1
+        min_general = 1000.
+        min_general_idx = -1
+        max_left = 0.0
+        max_left_idx = -1
+        min_left = 1000.
+        min_left_idx = -1 
+        max_right = 0.0
+        max_right_idx = -1
+        min_right = 1000.
+        min_right_idx = -1 
+        
+        for k in range(NHARMS):
+            value = p * weights_current[k] + (1 - p) * self.weights_prev[k]
+            self.weights_prev[k] = copy.copy(value)
+            if k < NNOTES:
+                weights_current[k] = value * avg_simple_fft[k] * scaled_vect[k] * scaled_vect[k]*13.
+            else:
+                weights_current[k] = value * avg_simple_fft[k] * scaled_vect[NNOTES - 1] * scaled_vect[NNOTES - 1]*13.
+            centroid_index = int(midiCentroid - index_to_MIDI)
+            if weights_current[k] > max_general:
+                max_general = weights_current[k]
+                max_general_idx = k
+            if weights_current[k] < min_general:
+                min_general = weights_current[k]
+                min_general_idx = k
+            if k <= centroid_index and weights_current[k] > max_left:
+                max_left = weights_current[k]
+                max_left_idx = k
+            if k <= centroid_index and weights_current[k] < min_left:
+                min_left = weights_current[k]
+                min_left_idx = k
+            if k > centroid_index and weights_current[k] > max_right:
+                max_right = weights_current[k]
+                max_right_idx = k
+            if k > centroid_index and weights_current[k] < min_right:
+                min_right = weights_current[k]
+                min_right_idx = k
+        
+        return weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx
+            
 
     def prepare_for_evaluation(self, a_towrite, top_matches,allowance, a_relmax):
         for j in range(NNOTES):

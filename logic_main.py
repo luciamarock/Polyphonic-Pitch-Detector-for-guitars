@@ -15,6 +15,7 @@ freq=genfromtxt("./algo_outputs/notes_piano.txt") # notes of the piano
 names = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
 logic = LP.LogicPiano()
 NNOTES = LP.NNOTES
+NHARMS = LP.NHARMS
 index_to_MIDI = 20 # Added to C++ !!
 m_strictMode = True
 
@@ -80,13 +81,13 @@ periodicity = freq_to_MIDI(periodicities) # l'ho fatto in C++ (per la chitarra g
 topMatches=n.array(genfromtxt("./appunti/logic/resources/topMatches.out"))
 """
 duration = 40
-json_file_path = '/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano/piano_data.json'
+json_file_path = '/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano_data.json'
 with open(json_file_path, 'r') as file:
     data = json.load(file)
 file_index = 11 # +21 mi da la nota MIDI (il 17 e' una merda - per fare tests grossolani vado di 10 in 10 da 0 a 80)
 dataRTFI = n.genfromtxt(data["RTFIs"][file_index])
-abscissa = n.arange(20, 109)
-#abscissa = n.arange(20, 128)
+#abscissa = n.arange(20, 109)
+abscissa = n.arange(20, 128)
 dataFFT = n.genfromtxt(data["FFTs"][file_index])
 allowance = n.genfromtxt(data["Allowance"][file_index])
 periodicity = n.genfromtxt(data["Periodicity"][file_index])
@@ -136,36 +137,35 @@ sys.exit()
 plt.ion()  # Turn on interactive mode
 fig, ax = plt.subplots()
 activate_plot = True
+
 for i in range(len(allowance)):
     a_towrite = [0] * NNOTES
     a_score = matrixscore[i]
     logic.process_logic(dataRTFI[i], dataFFT[i], allowance[i], a_score, m_strictMode, a_towrite, periodicity[i], topMatches[i], spectralCentroid[i])
-    if i > -1: # first note in score at frame 562  
-        test_vect = [] # this is populated with the expected notes from the score 
+    if allowance[i] > 0.0: # first note in score at frame 562  
+        test_vect = []  
         matches = []  # turns green when the expected notes are found in the output 
         output = logic.get_output() # a_towrite written by the Logic 
-        for j in range(len(a_score)):
-            if a_score[j]>0:
+        for j in range(NHARMS):
+            if j < NNOTES:
                 test_vect.append(dataRTFI[i][j])
-                if a_score[j] in output:
-                    matches.append(dataRTFI[i][j])
-                else: 
-                    matches.append(0.0)
             else:
-                test_vect.append(0.0)
-                matches.append(0.0)
+                test_vect.append(dataRTFI[i][NNOTES - 1])
         conditions = logic.get_conditions()
-        logic_temp = logic.get_logic_temp() # vectplot
-        logic_final = logic.get_logic_final() # rtfi_Wavg
+        logic_temp = logic.get_logic_temp()
+        for k in range(NHARMS - NNOTES):
+            logic_temp.append(dataRTFI[i][NNOTES - 1])
+        logic_final = logic.get_logic_final() 
+        test_element = logic.get_test_element()
         
         detection = logic.get_detection()  
         if activate_plot and i < 70:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()
-            ax.plot(abscissa,dataRTFI[i])
+            ax.plot(abscissa,test_vect)
+            ax.plot(abscissa,logic_temp)
             ax.plot(abscissa,logic_final)
-            ax.plot(abscissa,logic_temp,"D",color="green")  # logic_temp or abs(dataFFT[i])
             #ax.plot(abscissa,detection,"--",color="grey")
             ax.axhline(y=th, color='pink', linestyle='--')
             ax.axvline(abscissa[minp], color='pink', linestyle='--')
@@ -184,6 +184,7 @@ for i in range(len(allowance)):
             plt.draw()  # Redraw the plot
             fig.canvas.flush_events()  # Update the plot
             time.sleep(0.016)  # Pause for a moment
-
+        #else:
+            #sys.exit()
 plt.ioff()  # Turn off interactive mode
 plt.show()
