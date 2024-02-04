@@ -164,12 +164,13 @@ for i in range(len(allowance)):
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()
             ax.plot(abscissa,test_vect)
-            ax.plot(abscissa,logic_temp)
+            #ax.plot(abscissa,logic_temp)
             ax.plot(abscissa,logic_final)
             #ax.plot(abscissa,detection,"--",color="grey")
-            ax.axhline(y=th, color='pink', linestyle='--')
-            ax.axvline(abscissa[minp], color='pink', linestyle='--')
-            ax.axvline(abscissa[maxp], color='pink', linestyle='--')
+            ax.axhline(y=th, color='grey', linestyle='--')
+            ax.axhline(y=test_element, color='grey', linestyle='--')
+            #ax.axvline(abscissa[minp], color='pink', linestyle='--')
+            #ax.axvline(abscissa[maxp], color='pink', linestyle='--')
             """
             # only useful when analyzing a song in sync with the score 
             ax.plot(test_vect,'d',color="red")

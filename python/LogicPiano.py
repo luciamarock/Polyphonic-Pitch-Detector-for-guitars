@@ -75,19 +75,17 @@ class LogicPiano:
         #formatted_value = "%.6f" % value
         #print("{} test".format(formatted_value))
         self.avg_rtfi = value
-        self.minp = minidx
-        self.maxp = maxidx
         
         weights_current = self.vectplot_contains_candidates(rtfi_Wagv, periodicity, top_matches)
         
         self.logic_temp = copy.copy(rtfi_Wagv)
 
-        self.test = copy.copy(weights_current)
 
         weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx = self.calculate_energy(weights_current, fft_avg, rtfi_Wagv, midiCentroid)
-        #formatted_value = "%.6f" % weights_current[35]
-        #string = "test " + formatted_value
-        #print(string)
+        new_value = (max_left + max_right) / 2.
+        self.test = new_value
+        self.minp = max_left_idx
+        self.maxp = max_right_idx
         self.logic_final = copy.copy(weights_current)
         #redmax = self.process_vect_note_and_vect_plot(data_fft, data_rtfi, self.energymin, blueidx, allowance,top_matches, periodicity)
         #self.AVenergymin = redmax * stability_threshold
@@ -263,24 +261,25 @@ class LogicPiano:
             else:
                 weights_current[k] = value * avg_simple_fft[k] * scaled_vect[NNOTES - 1] * scaled_vect[NNOTES - 1]*13.
             centroid_index = int(midiCentroid - index_to_MIDI)
-            if weights_current[k] > max_general:
-                max_general = weights_current[k]
-                max_general_idx = k
-            if weights_current[k] < min_general:
-                min_general = weights_current[k]
-                min_general_idx = k
-            if k <= centroid_index and weights_current[k] > max_left:
-                max_left = weights_current[k]
-                max_left_idx = k
-            if k <= centroid_index and weights_current[k] < min_left:
-                min_left = weights_current[k]
-                min_left_idx = k
-            if k > centroid_index and weights_current[k] > max_right:
-                max_right = weights_current[k]
-                max_right_idx = k
-            if k > centroid_index and weights_current[k] < min_right:
-                min_right = weights_current[k]
-                min_right_idx = k
+            if weights_current[k] > 0.0003:
+                if weights_current[k] > max_general:
+                    max_general = weights_current[k]
+                    max_general_idx = k
+                if weights_current[k] < min_general:
+                    min_general = weights_current[k]
+                    min_general_idx = k
+                if k <= centroid_index and weights_current[k] > max_left:
+                    max_left = weights_current[k]
+                    max_left_idx = k
+                if k <= centroid_index and weights_current[k] < min_left:
+                    min_left = weights_current[k]
+                    min_left_idx = k
+                if k > centroid_index and weights_current[k] > max_right:
+                    max_right = weights_current[k]
+                    max_right_idx = k
+                if k > centroid_index and weights_current[k] < min_right:
+                    min_right = weights_current[k]
+                    min_right_idx = k
         
         return weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx
             
