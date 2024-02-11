@@ -1,12 +1,21 @@
-# This module is intended to constitute the new version of python/logic_piano.py 
-# It uses the class python/LogicPiano.py which is a chatGPT translation of LogicPiano.h and LogicPiano.cpp 
-# In theory I should re-obtain the same results of the C++ implementation
+# logic_main.py
+"""
+@brief Python script for processing piano musical data.
+
+This module is intended to constitute the new version of python/logic_piano.py. 
+It uses the class python.LogicPiano, which is a ChatGPT translation of LogicPiano.h and LogicPiano.cpp. 
+In theory, the script should produce the same results as the C++ implementation.
+
+This script loads piano note frequencies from a file, reads score data, converts it into a matrix representation, and 
+generates a JSON file containing information about MIDI note numbers, note names, and frequencies.
+"""
+
 import os
 import json
 import math
 import time
 import numpy as n 
-import sys
+#import sys
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
 import python.LogicPiano as LP
@@ -53,7 +62,7 @@ def get_matrix(midiscore,freq):
                 matrix[i][value - index_to_MIDI] = value 
     return matrix
 
-midiscore = get_score("./appunti/logic/resources/a_score.out")
+midiscore = get_score("./appunti/logic/checks/resources/a_score.out")
 matrixscore = get_matrix(midiscore,freq)
 
 filename = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/resources/note_struct.json"
@@ -69,6 +78,7 @@ if not os.path.isfile(filename):
         #print("{} - frequency {}, midi {}".format(note_name, note_freq, midi_num))
     with open("./resources/note_struct.json", "w") as json_file:
         json.dump(note_struct, json_file, indent=4)
+
 """
 # The following block loads the data needed for analyzing Beat It Cut 
 #integer=n.array(genfromtxt("./appunti/logic/resources/integer.out"))
@@ -80,34 +90,22 @@ periodicities=n.array(genfromtxt("./appunti/logic/resources/periodicity.out"))
 periodicity = freq_to_MIDI(periodicities) # l'ho fatto in C++ (per la chitarra gia' uscira come MIDI)
 topMatches=n.array(genfromtxt("./appunti/logic/resources/topMatches.out"))
 """
+
 duration = 40
+file_index = 11 # +21 mi da la nota MIDI (il 17 e' una merda - per fare tests grossolani vado di 10 in 10 da 0 a 80)
+#abscissa = n.arange(20, 109)
+abscissa = n.arange(20, 128)
 json_file_path = '/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano_data.json'
 with open(json_file_path, 'r') as file:
     data = json.load(file)
-file_index = 11 # +21 mi da la nota MIDI (il 17 e' una merda - per fare tests grossolani vado di 10 in 10 da 0 a 80)
+
+""" monophonic samples """
 dataRTFI = n.genfromtxt(data["RTFIs"][file_index])
-#abscissa = n.arange(20, 109)
-abscissa = n.arange(20, 128)
 dataFFT = n.genfromtxt(data["FFTs"][file_index])
 allowance = n.genfromtxt(data["Allowance"][file_index])
 periodicity = n.genfromtxt(data["Periodicity"][file_index])
 topMatches = n.genfromtxt(data["topMatches"][file_index]) 
 
-filename = "55_59_62_72.out"
-scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
-allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
-print(allowance_file)
-fft_file = scores_base_path + "FFTs" + os.path.sep + filename 
-periodicity_file = scores_base_path + "Periodicity" + os.path.sep + filename
-rtfi_file = scores_base_path + "RTFIs" + os.path.sep + filename
-centroid_file = scores_base_path + "SpectralCentroid" + os.path.sep + filename
-matches_file = scores_base_path + "topMatches" + os.path.sep + filename 
-dataRTFI = n.genfromtxt(rtfi_file)
-dataFFT = n.genfromtxt(fft_file)
-allowance = n.genfromtxt(allowance_file)
-periodicity = n.genfromtxt(periodicity_file)
-topMatches = n.genfromtxt(matches_file) 
-spectralCentroid = n.genfromtxt(centroid_file)
 """
 # The following plot is static and it is used to compare the pink vector with the previous approach 
 frames = 0 
@@ -133,6 +131,24 @@ plt.plot(absissa,ordinata)
 plt.show()
 sys.exit()
 """
+
+""" poliphonic samples """
+filename = "55_59_62_72.out"
+scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
+allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
+print(allowance_file)
+fft_file = scores_base_path + "FFTs" + os.path.sep + filename 
+periodicity_file = scores_base_path + "Periodicity" + os.path.sep + filename
+rtfi_file = scores_base_path + "RTFIs" + os.path.sep + filename
+centroid_file = scores_base_path + "SpectralCentroid" + os.path.sep + filename
+matches_file = scores_base_path + "topMatches" + os.path.sep + filename 
+dataRTFI = n.genfromtxt(rtfi_file)
+dataFFT = n.genfromtxt(fft_file)
+allowance = n.genfromtxt(allowance_file)
+periodicity = n.genfromtxt(periodicity_file)
+topMatches = n.genfromtxt(matches_file) 
+spectralCentroid = n.genfromtxt(centroid_file)
+
 # Initialize the figure and axis
 plt.ion()  # Turn on interactive mode
 fig, ax = plt.subplots()
@@ -171,21 +187,22 @@ for i in range(len(allowance)):
             ax.axhline(y=test_element, color='grey', linestyle='--')
             #ax.axvline(abscissa[minp], color='pink', linestyle='--')
             #ax.axvline(abscissa[maxp], color='pink', linestyle='--')
-            """
-            # only useful when analyzing a song in sync with the score 
-            ax.plot(test_vect,'d',color="red")
-            for k in range(len(test_vect)):
-                if test_vect[k] > 0:
-                    ax.annotate(str(conditions[k]),xy=(k,dataRTFI[i][k]),xytext=(1.5, 1.5), textcoords='offset points')
-                    ax.vlines(x=k, ymin=0, ymax=test_vect[k], colors='grey', linestyles='dashed')
-                if logic_temp[k] > 0:
-                    ax.annotate(str(conditions[k]),xy=(k,logic_temp[k]),xytext=(1.5, 1.5), textcoords='offset points')
-            ax.plot(matches,'d',color="green")
-            """
             plt.draw()  # Redraw the plot
             fig.canvas.flush_events()  # Update the plot
             time.sleep(0.016)  # Pause for a moment
-        #else:
-            #sys.exit()
 plt.ioff()  # Turn off interactive mode
 plt.show()
+
+
+"""
+# only useful when analyzing a song in sync with the score 
+ax.plot(test_vect,'d',color="red")
+for k in range(len(test_vect)):
+    if test_vect[k] > 0:
+        ax.annotate(str(conditions[k]),xy=(k,dataRTFI[i][k]),xytext=(1.5, 1.5), textcoords='offset points')
+        ax.vlines(x=k, ymin=0, ymax=test_vect[k], colors='grey', linestyles='dashed')
+    if logic_temp[k] > 0:
+        ax.annotate(str(conditions[k]),xy=(k,logic_temp[k]),xytext=(1.5, 1.5), textcoords='offset points')
+ax.plot(matches,'d',color="green")
+"""
+
