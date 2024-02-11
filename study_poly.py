@@ -5,10 +5,34 @@ Created on Fri Jan 12 11:02:13 2024
 @author: luciamarock
 """
 import os 
-import sys 
 import json
 import numpy as np
-import python.plots as plotters
+import python.LogicPiano as LP
+
+m_strictMode = True
+a_towrite = [0] * LP.NNOTES
+a_score = [0] * LP.NNOTES
+
+def expected_notes(filename):
+    notes = []
+    temp = filename.split(".")
+    notenames = temp[0].split("_")
+    for item in notenames:
+        if item:
+            notes.append(int(item))
+    
+    return notes
+
+def process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print):
+    logic = LP.LogicPiano()
+    for i in range(len(allowance)):
+        logic.process_logic(dataRTFI[i], dataFFT[i], allowance[i],
+            a_score, m_strictMode, a_towrite,
+            periodicity[i], topMatches[i], spectralCentroid[i])
+        #if to_print and allowance[i] > 0:
+            #logic_final = logic.get_logic_final()
+            #string = "test " + str(logic_final[35])
+            #print(string)
 
 filename = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano_poly.json"
 if not os.path.isfile(filename):
@@ -53,7 +77,11 @@ for item in monofiles["Allowance"]:
     periodicity = np.genfromtxt(periodicity_file)
     topMatches = np.genfromtxt(matches_file) 
     spectralCentroid = np.genfromtxt(centroid_file)
+    notes = expected_notes(filename)
     print("    loaded {}".format(filename))
+    #print("    notes {}".format(notes))
+    to_print = False
+    process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print)
 
 poly_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
 for item in polyfiles["Allowance"]:
@@ -70,8 +98,12 @@ for item in polyfiles["Allowance"]:
     periodicity = np.genfromtxt(periodicity_file)
     topMatches = np.genfromtxt(matches_file) 
     spectralCentroid = np.genfromtxt(centroid_file)
+    notes = expected_notes(filename)
     print("    loaded {}".format(filename))
+    #print("    notes {}".format(notes))
+    to_print = False 
+    if filename == "55_59_62_72.out":
+        to_print = True 
+    process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print)
 
-sys.exit()
-#TODO use LogicPiano 
-plotters.continuous_plot(instrument, fft_file, centroid_file,matches_file,rtfi_file,periodicity_file,allowance_file)
+
