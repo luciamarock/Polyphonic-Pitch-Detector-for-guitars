@@ -29,6 +29,18 @@ index_to_MIDI = 20 # Added to C++ !!
 m_strictMode = True
 
 def freq_to_MIDI(numpy_array):
+    """
+    Converts an array of frequencies to corresponding MIDI numbers.
+
+    Args:
+        numpy_array (numpy.ndarray): An array of floating-point numbers representing frequencies in Hz.
+
+    Returns:
+        numpy.ndarray: An array of integers representing the corresponding MIDI numbers.
+
+    Raises:
+        ValueError: If any frequency in the input array is not found in the `freq` global variable.
+    """
     periodicity = []
     for elem in numpy_array:
         periodicity.append(n.where(freq == elem)[0][0] + index_to_MIDI)
@@ -36,6 +48,19 @@ def freq_to_MIDI(numpy_array):
     return periodicity 
 
 def get_score(score_file):
+    """
+    Reads and parses a musical score file into a list of lists representing MIDI data.
+
+    Args:
+        score_file (str): Path to the score file.
+
+    Returns:
+        list: A list of lists, where each inner list represents a line in the score with MIDI data.
+
+    Raises:
+        FileNotFoundError: If the score file is not found.
+        IOError: If there is an error reading the file.
+    """
     scoreout = open(score_file, "r")
     scoreout=scoreout.readlines()
     midiscore = []
@@ -53,6 +78,19 @@ def get_score(score_file):
     return midiscore
 
 def get_matrix(midiscore,freq):
+    """
+    Creates a matrix representing the score, where rows represent score elements and columns represent MIDI notes.
+
+    Args:
+        midiscore (list): A list of lists representing MIDI data from a score.
+        freq (numpy.ndarray): An array of floating-point numbers representing frequencies in Hz.
+
+    Returns:
+        numpy.ndarray: A matrix where rows represent score elements and columns represent MIDI notes, with values indicating the presence of notes.
+
+    Raises:
+        ValueError: If any MIDI number in the `midiscore` is not found in the `freq` global variable.
+    """
     matrix = n.zeros((len(midiscore), NNOTES))
     for i in range(len(midiscore)):
         for j in range(len(midiscore[i])):
@@ -64,6 +102,18 @@ def get_matrix(midiscore,freq):
 
 midiscore = get_score("./appunti/logic/checks/resources/a_score.out")
 matrixscore = get_matrix(midiscore,freq)
+
+"""
+Creates a JSON file containing information about MIDI note numbers, note names, and frequencies.
+
+Args:
+    filename (str): Path to the output JSON file.
+    freq (numpy.ndarray): An array of floating-point numbers representing frequencies in Hz.
+
+Raises:
+    ValueError: If any frequency in the `freq` array is not found in the `names` global variable.
+    IOError: If there is an error writing to the file.
+"""
 
 filename = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/resources/note_struct.json"
 if not os.path.isfile(filename):
@@ -91,15 +141,12 @@ periodicity = freq_to_MIDI(periodicities) # l'ho fatto in C++ (per la chitarra g
 topMatches=n.array(genfromtxt("./appunti/logic/resources/topMatches.out"))
 """
 
-duration = 40
-file_index = 11 # +21 mi da la nota MIDI (il 17 e' una merda - per fare tests grossolani vado di 10 in 10 da 0 a 80)
-#abscissa = n.arange(20, 109)
-abscissa = n.arange(20, 128)
 json_file_path = '/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano_data.json'
 with open(json_file_path, 'r') as file:
     data = json.load(file)
 
 """ monophonic samples """
+file_index = 11 #file_index + 21 is the MIDI note number
 dataRTFI = n.genfromtxt(data["RTFIs"][file_index])
 dataFFT = n.genfromtxt(data["FFTs"][file_index])
 allowance = n.genfromtxt(data["Allowance"][file_index])
@@ -110,6 +157,7 @@ topMatches = n.genfromtxt(data["topMatches"][file_index])
 # The following plot is static and it is used to compare the pink vector with the previous approach 
 frames = 0 
 counter = 0
+duration = 40
 absissa = n.arange(20, 109)
 ordinata = n.zeros(89)
 while counter < len(allowance) and frames < duration:
@@ -132,11 +180,21 @@ plt.show()
 sys.exit()
 """
 
+#abscissa = n.arange(20, 109)
+abscissa = n.arange(20, 128)
+
+""" monophonic samples """
+#filename = "93.out"
+#scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/"
+#allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
+
 """ poliphonic samples """
 filename = "55_59_62_72.out"
 scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
 allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
+
 print(allowance_file)
+
 fft_file = scores_base_path + "FFTs" + os.path.sep + filename 
 periodicity_file = scores_base_path + "Periodicity" + os.path.sep + filename
 rtfi_file = scores_base_path + "RTFIs" + os.path.sep + filename
@@ -173,8 +231,9 @@ for i in range(len(allowance)):
             logic_temp.append(dataRTFI[i][NNOTES - 1])
         logic_final = logic.get_logic_final() 
         test_element = logic.get_test_element()
-        
         detection = logic.get_detection()  
+        string = "test " + str(test_vect[35])
+        print(string)
         if activate_plot and i < 70:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()

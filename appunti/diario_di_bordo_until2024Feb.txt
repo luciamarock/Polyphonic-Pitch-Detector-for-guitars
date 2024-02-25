@@ -1,0 +1,156 @@
+
+
+##### FATTI chitarra #####
+
+Ho messo una nuova versione dell'fft. Riverificare le cose scritte sopra con gli appunti cartacei alla mano. 
+Una volta ripreso il discorso sostituire tutti i vectfft[.] con datafft[.] e produrre le scores per i nuovi datafft con la nuova fft. 
+Andare avanti con la logica polifonica e fare solo alcuni tests sulle note monofoniche (anzi no si dovrebbe dare la priorita' a quelle) 
+Manca ancora molto lavoro da fare quindi finire la logica 1 e cominciare la logica 2. Bisogna finire questo cazzo di AudioAnalyzer perche' bisogna mettere mano all'HW. 
+
+Ho sostituito tutti i vectfft con datafft e questo l'ho fatto nel nuovo script python logic_guit.py 
+gli altri due script python non ancora li ho messi in Bcks perche' magari possono ancora servirmi. 
+confront.py sta in Bcks/py_old/ ; logic_res.py sta in Bcks/logic_previous/
+devo rigenerare tutti i campioni polifonici con la nuova implementazione dell'fft e rifare i tests. 
+assicurarsi che per il mondo polifonico tale sostituzione di fft non cambia niente. 
+
+Ho aggiunto utili funzionalita' alla parte di plotting, adesso vedo la nota, la sua freqeunza e l'ampiezza del suo fondamentale.
+
+decido di mettere una condizione sull terze nelle posizioni: A, E, D del sistema (C-A-G-E-D)
+queste terze possono essere maggiori o minori quindi vanno messi degli and in or tra loro. 
+ora sospetto che fondamentale e terza in bicordo comporta che anche l'armonico della terza viene riconosciuto come nota (perche' non ho messo una condizione su exist[3 o 4]) quindi faccio una prova con dei campioni costruiti con Audacity --> invece no, mi sbagliavo perche' nel caso di bicordi vectnote[j-4] (che sarebbe l'ottava del fondamentale) viene messa a zero (nell'else) prima di considerare vecnote[j], quindi non entra nella condizione delle TERZE. 
+Questo significa che quando le terze vengono riconosciuti negli accordi di settima, tale riconoscimento avviene grazie all'errore di ricnoscimento dell'ottava del fondamentale 
+inoltre le ottave delle quinte (realmente esistenti) non vengono riconosciute a causa della condizione con la fft che pero' e' utile, anzi, addirittura nel SOL maggiore si sbaglia pure. 
+l'unica cosa e' vedere cosa succede con altri accordi (rivolti)
+quindi adesso devo registrare altri campioni audio di accordi, solo che questa scheda audio sta facendo strane cose 
+
+
+la condizione sulle terze (che per ora ho commentato) copre solo una delle varie configurazioni (A, E, D del sistema (C-A-G-E-D)); 
+nell'accordo di Amagg_open si verifica di nuovo il problema sulle quinte che avevo gia' individuato a Maggio quindi continuo da qui, cercando di sistemare le Quinte e lasciando da parte per il momento le Terze. Al chunck 23 viene riconosciuto un Si3 (inesistente) come quinta del Mi2 e invece non viene riconosciuto per niente il La2. 
+Confrontando col G(open) noto che anche li' non viene preso il Re1 che invece esiste (e esiste anche il suo primo armonico) --> forse andrebbe messa una condizione aggiuntiva per prendere queste note solo quando si e' in polifonia (deducibile da existsum)
+capire questa frase del 31 Maggio 2020 : "inoltre le ottave delle quinte (realmente esistenti) non vengono riconosciute a causa della condizione con la fft che pero' e' utile, anzi, addirittura nel SOL maggiore si sbaglia pure." Si riferisce alle condizioni di riconoscimento della quinta. 
+
+In questo momento il main chiama lo script che opera sui file di output solo che adesso lo script e' programmato per manipolare i campioni di pianoforte
+
+
+
+##### FATTI piano #####
+
+esporre i parametri di configurazione dell'analizzatore C++ in modo da poterlo utilizzare anche con i campioni di pianoforte 
+
+ho scoperto un bug nel calcolo di gaps, vedere cosa comporta per la logica 
+apparentemente non molto, ho fatto una prova con Amag_open (quello degli appunti di logic_one) e sembra che non cambia nulla 
+
+testare il programma con i campioni di pianoforte 
+
+per generare partiture piu' velocemente ho chiamato lo script.sh da dentro il main.cpp e gli passo filename che e' uguale all'ultima parte del path 
+in script faccio una cosa molto specifica per i campioni di pianoforte, poi va tolto 
+
+anche gli armonici di una nota esistente hanno il pattern che li permette di essere considerati come note esistenti
+pertanto gli armonici vengono stimati come note dall'algoritmo di logica. 
+in questo momento mi aiuto con la FFT per fare una stima delle energia media e in base a quella fare una scrematura dei picchi 
+(i risultati sono ababstanza soddifsacenti) ma non so cosa fare per migliorare il riconoscimento delle note reali
+
+ho creato il progetto per il piano detection in una directory separata e la sincronizzo con il repo; a quel progetto mi devo ispirare 
+per trasformare poi l'algoritmo per la chitarra in codice integrabile in una piattaforma 
+
+, con i 4 secondi di silenzio ho testato che la soluzione con l'env folower funziona
+allowance funge anche da noteoff
+
+adesso con GBD_G ci sono dei problemi dei primi istanti, praticamente il pattern si sfascia di continuo quindi davvero non so che fare, pero' almeno potrei evitare il riconoscimento di note se la loro rtfi e' troppo bassa rispetto al massimo e se il massimo non e' un suo armonico (succede nei primi 20 chuncks credo)
+
+sui campioni polifonici ci sono dei problemi (che pero' sono legati alla condizione sui picchi rossi), questa condizione mi aiuta sul B perche' dopo un po' fa cadere 
+il primo armonico (ed e' giusto) pero' mi ammazza anche delle note che esistono davvero, devo differenziare questi due casi 
+li ho differenziati perche' mentre l'armonico passa per stabile e non per first condition (quindi memoria e' 0), le altre note invece passano per first condition che mette memoria a un valore diverso da zero  
+
+cercare di recuperare le cose che verrebbero ammazzate dalla soglia rossa forse e' una cazzata 
+
+ho pensato di mettere piu' RTFI per evitare il caso in cui un armonico di una nota copre il pattern di un'altra nota ma ho anche visto che in alcune circostanze questo mascheramento aiuta a non riconoscere una nota che non c'entra niente, quindi per tentare di coprire il caso in cui il pattern viene sfasciato da un'altra nota ho introddotto la condizione (polyphonic condition che prima si chiamava second condition), questa rinuncia all'esistenza del secondo armonico se pero' esiste almeno una nota che sta suonando e se vectnote supera la soglia di energia minima. 
+
+
+la versione della logica attuale contiene cio' che ho reputato essere il meglio delle versioni precedenti a rigor di logica leggendo il codice 
+adesso devo fare dei test e vedere cosa puo' passare e cosa no (devo anche far dipendere le soglie da un parametro sensibilita')
+
+in OnlinePianist/Bcks c'e' ci sono tutte le versioni delle logiche precedenti 
+
+
+nalla logica_piano ho commentato i plots perche' adesso mi concentro sul confrontare la partitura MIDI con vectplot e vectnote 
+
+nello script python infatti ho creato la funzione diagnostic dentro della quale faccio questo confronto, midiscore e' l'equivalente della stampa della mappa in C++, la prima nota della canzone (tagliata) e' MIDI number 39 corrispondente a j 19 che sarebbe un Eb2 
+
+Introduco un _event_buffer per segnarmi i confronti tra la partitura e l'analisi (algoritmo sul quadernino) 
+
+
+- l'implementazione in C++ (backup di quella per il piano) sta in ./appunti/code_refactoring/
+	- la logica decisionale (confronto con la partitura) non funziona cme in python 
+ho fatto dei cambi ma non risolvono nulla (issue #5), infatti le checksums rimangono perfettamente uguali: 
+dopo aver risolto issue #5 le nuove checksums sono le seguenti:
+5b1f74cc80e325bbf5d7c7409ec0b9f4  integer.out
+6ad5e750fd6daa5f78eba99a8a040031  monodet.out
+	Tuttavia tutto questo mi e' servito per distogliere l'attenzione dal Bug di "handsmode" che invece risolvera' molti problemi e percio' me lo gioco dopo l'implementazione del match di frequenze 
+
+- i processi (integer, RTFI, FFT) danno gli stessi risultati (a meno di costanti, vedere i "compare...Tools"), le partiture sono identiche semplicemente shiftate (in tempo) di un buffer
+- threading example --> /home/luciamarock/Dropbox/cppEsercizi/main_function_process/
+- ELIMINARE DUPLICATI VARIABILI COSTANTI (Fc, F0, tet. etc ...), rendere tutto facilmente configurabile per la chitarra
+- REVISIONARE FFT E AGGIUNGERE CALCOLO DEL centroide spettrale: la variazione di ampiezza (attacchi) puo' essere arricchita con la variazione di centroide spettrale 
+	--> (per capire i ribattuti sul piano o arpeggi sulla chitara); un brusco cambio di centroide spettrale potrebbe significare che qualcosa e' stato suonato  
+- IMPLEMENTARE ALGORITMO NEL TEMPO: utilizzo della monofonica sulla chitarra --> /home/luciamarock/Documents/AudioAnalyzer/appunti/future_improvements (adesso sta in questi appunti)
+	--> con altro materiale ci ho fatto questa pagina web --> http://lushmaroon.altervista.org/spunti.html?cb=1691933354622 
+   (test ugualianza anche con risultati per chitarra)
+(vedere materiale da studiare per matching in frequenza)
+per implementare l'algoritmo di matching in frequenza ho bisogno di tutte le FFT di tutte le note del piano. Ho estratto queste FFT facendo uso di uno script python che chiama uno script bash:
+	/home/luciamarock/Dropbox/shared/dev/PitchDetector/python/run_script.py e /home/luciamarock/Dropbox/shared/dev/PitchDetector/src/.run.sh
+solo che adesso questi scripts li ho messi al sicuro dentro la cartella degli appunti del matching in frequenza 
+- IMPLEMENTARE ALGORITMO DI MATCHING IN FREQUENZA --> moltiplico il segnale per ciascuna dele fingerprint registrandomi i migliori 10 match 
+	la FFT del segnale dovebbe essere la somma delle migliori matching FFT (ovvero le note che lo compongono) --> nella pratica non e' cosi'
+	analizzare se esistono grandi differenze tra i migliori match e gli altri match tra i primi 10 --> non esistono, non si puo' fare una netta separazione 
+- mandare nella logica del piano altri dati (centroide spettrale, spectral_match, time_det ...) 
+- eliminare la condizione 3 dalla logica per pianoforte (forse sostituire NoPattern con qualcos'altro), aggiustare la condizione 1 (facendo uso della monofonica e del freqMatch)
+- migliorare ancora un po' la logica del piano (in realta' questi cambi non hann migliorato un cazzo)
+- riverificare che tutti gli output dell'algoritmo coincidano con quelli in /home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/logic/resources
+  (la logica in python produce lo stesso identico out della logica in C++)
+- se tutti gli output sono identici pushare in git e chidere tutto con commento 
+- adattare l'algoritmo alla chitarra
+- riverificare tutti gli output in mio possesso (basta solo su qualche file) 
+  (il file test.py maneggia i filename della chitarra Ibanez)
+- utilizzare lo script run e i tool di visualizzazione per costruire DB, esportare file mancanti e fare verifiche 
+	- costruire fft DB
+	- esportare topMatches e allowance per Prs e Ibanez (sto mettendo tutto in scores)
+	- plottare i vecchi integer.out contro allowance per verificare che va tutto bene 
+  allowance non si attiva sempre per la chitarra (utilizzare analyze_envelope.py per vederlo), 
+  questo succede perche' anche attack_threshold e integer_threshold del programma C++ devono dipendere dallo strumento (al momento non e' cosi')
+--> no questo l'ho risolto inizializzando envprev a integer_threshold (prima partiva da 1)
+ho prodotto piano_data.json che e' l'equivalente del file per la chitarra solo che esclude alcuni file che hanno allowance = 0
+ho migliorato il DB di ffts normalizzandolo rispetto ai picchi e l'enegia --> miglioramento notevole dei risultati di topMatches (poi lo dovro' fare anche per la chitarra)
+ho fatto una funzione di plotting di una serie (con tutti i risultati di analisi) e una funzione di analisi di tutti i risultati su tutte le note (con plot di statistica alla fine)
+ho fatto la media pesata sui valori di dataRTFI migliorando di molto i risultati 
+- riallinearsi con la chitarra e in parallelo produrre documentazione per il piano 
+ - [seconda analisi sui fogli] (AI per stimare i parametri dell'algoritmo  ?) --> per stimare le soglie non ho davvero applicato una AI, ho in realta' individuato i massimi e minimi dei rapporti tra fondamentale e primo armonico e tra fondamentale e secondo aromico, dopodiche' ho stabilito una legge empirica che include il parametro di sensisbilita'. 
+Ho notato che lo "shape" della terzina armonica (fondamentale, primo e seondo armonico) cambia in funzione della lunghezza della corda vibrante e dello spessore ella corda. Per questa ragione un possibile miglioramento futuro potrebbe essere quello di fa variare le soglie in base alla frequenza anche se questo per la chitarra non sarebbe neanche completamente vero poiche' una stessa nota puo' essere suonata in posizioni diverse. Se si riuscisse a trovare una dipendenza dalla frequenza (o dalla posizione sul manico) si riuscirebbero a stringere le soglie e ridurre il riconoscimento di falsi patterns. Forse fare uso del centroide spettrale sulla chitarra potrebbe aiutarmi a distinguere tra stessa nota suonata in posizioni diverse, infatti una nota suonata sulle corde acute avrebbe un centroide spettrale piu' elevato della stessa nota suonata su corde basse (ma piu' su nel manico). 
+- breve punto della situazione: Ho migliorato il DB dello spectral matching e adesso i best matches si concentrano in maggioranza sulla nota reale (e un pochino sul suo primo armonico). Contare i match limitrofi potrebbe aiutarmi a discriminare vere note da armonici. 
+Ho migliorato la tecnica RTFI sostituendo ogni valore con la media pesata della sua terzina armonica (fondamentale, primo e secondo armonico), questo sembra favorire l'emergere di patterns che potrebbero essere fuorvianti per cui va sviluppata la tecnica della minima energia (terza analisi) al di sotto della quale un pattern non viene preso in seria considerazione (non escludere mai, assegnare invece dei pesi o valori di probabilita'), cercare di capire se al valore delle'enrgia bisogna far contribuire l'FFT e come. Gli altri dati non mi dicono nulla in questo compito, forse solo il centroide spettrale, ma devo capire se e come usarlo in combinazione con FFT (e/o RTFI). 
+- in find_patterns_guitar() sto cercando di applicare le soglie per pulire i massimi relativi ma ho scoperto delle incongruenze 
+	(leggere /home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/guitar/first_condition_detection/readme.txt )
+(pero' adesso devo portarmi nelle stesse condizioni anche per il piano perche' ho un meeting a breve)
+- mi trovo allo studio dell'energia minima per pulire i risultati, ho fatto un primo tentativo qui:
+	/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/guitar/second_condition_detection
+  non e' male ma va migliorato, ho anche cominciato a parlare di punteggi affrontando lo stesso problema per il piano:
+	/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano/second_condition_detection
+Ho usato una versione modificata di logic_main.py (fa uso della classe LogicPiano) e la funzione sum_plot() di python.plots per stampare i candidati allo stato iniziale della logica 
+con il vecchio e il nuovo metodo, le figure salvate stanno in:
+/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano/comparison_with_previous_candidates
+sul lungo termine occorre ancora fare fede sull'RTFI, tuttavia i punti rosa di adesso rappresentano un'ottima selezione dei candidati 
+l'energia soglia potrebbe cambiare il nuovo metodo va molto meglio ma l'energia di soglia non mi suona molto, inoltre cacciare i risultati della detection (senza plot) e analizzarli
+ho calcolato energyvect come semplice prodotto tra FFt e RTFI (mediate)
+- Tests Polifonici --> Verificare che Spectral Matching segue le note --> Utilizzare fft_simple_avg e' utile perche' mi permette di far emergere i picchi bassi pero' puo' portare a delle 
+aberrazioni tipo nel caso 55 - 59 - 62 - 69 dove il 69 e' una melodia ma e' il secondo armonico di 50 (62 e' il primo) e quindi emerge come nota spuria (Re basso), qui ci vorrebbe il secondo stadio di logica
+che lo elimina con criteri di composizione dell'accordo. Sostituendo il 69 con il 72 nella melodia non va meglio nel senso che le note non vengono riconosciute, per casi come questi (di ricca polifonia) 
+occorre vedere l'RTFI e prendere delle decisioni sui suoi picchi. 
+In sostanza sebbene l'algoritmo puo' migliorare non si e' ancora al punto in cui accompagnamento piu' melodia viene riconosciuto agevolmente (devo ancora fare maghesi di logica). Non posso nemmeno
+fare affidamento sullo spectral matching, forse migliorando quello il meccanismo di scoring (punti rosa) funzionerebbe meglio e la logica sarebbe molto agevolata. 
+verificare separazione note vere dagli armonici, criteri di considerare o no i punti rosa (quando sono vicini, per esempio 47, 48, 49), qui non ancora stiamo parlando di "Logica" nel senso di una intelligenza selettiva in base alle situazioni (per esempio in base ai "registri" del pianoforte)
+[le note acutissime dovrebbero "ascoltare" solo l'RTFI] o nel senso del PitchTracking (memoria e suo inverso, exist e suo inverso) o tutte le altre logiche tipo existsum per discriminare mono da poly, etc.- Rifare le partiture polifoniche del piano (le avevo generate col DB della chitarra): per quelle a 3 note non avevo piu' i file audio. 
+Introdurre il meccanismo di scoring nella logica per piano (ho costruito wheights_current adesso devo fare la media pesata e il vettore energia)
+- ho scritto calculate_energy in python ma ho fatto altri cambi che vanno riportati in C++ 
+ho messo study.py nelle cartelle appunti/study/ sia del piano sia della chitarra 
+sto utilizzando solo study_poly.py (non plotta) e logic_piano.py (plotta) per capire i comportamenti dei vari file audio, entrambe questi files fanno uso di python/LogicPiano.py
+

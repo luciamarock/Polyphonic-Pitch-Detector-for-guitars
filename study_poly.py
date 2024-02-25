@@ -24,15 +24,18 @@ def expected_notes(filename):
     return notes
 
 def process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print):
+    if to_print:
+        print(notes)
     logic = LP.LogicPiano()
     for i in range(len(allowance)):
         logic.process_logic(dataRTFI[i], dataFFT[i], allowance[i],
             a_score, m_strictMode, a_towrite,
             periodicity[i], topMatches[i], spectralCentroid[i])
-        #if to_print and allowance[i] > 0:
-            #logic_final = logic.get_logic_final()
-            #string = "test " + str(logic_final[35])
-            #print(string)
+        if to_print and allowance[i] > 0:
+            logic_final = logic.get_logic_final()
+            string = "test " + str(logic_final[35])
+            string = "test " + str(dataRTFI[i][35])
+            print(string)
 
 filename = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano_poly.json"
 if not os.path.isfile(filename):
