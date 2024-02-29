@@ -184,7 +184,7 @@ sys.exit()
 abscissa = n.arange(20, 128)
 
 """ monophonic samples """
-#filename = "93.out"
+#filename = "43.out"
 #scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/"
 #allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
 
@@ -232,16 +232,16 @@ for i in range(len(allowance)):
         logic_final = logic.get_logic_final() 
         test_element = logic.get_test_element()
         detection = logic.get_detection()  
-        string = "test " + str(test_vect[35])
-        print(string)
-        if activate_plot and i < 70:
+        #string = "test " + str(test_vect[35])
+        #print(string)
+        if activate_plot and i < 22:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()
             ax.plot(abscissa,test_vect)
             #ax.plot(abscissa,logic_temp)
             ax.plot(abscissa,logic_final)
-            #ax.plot(abscissa,detection,"--",color="grey")
+            ax.plot(abscissa,detection,"o")
             ax.axhline(y=th, color='grey', linestyle='--')
             ax.axhline(y=test_element, color='grey', linestyle='--')
             #ax.axvline(abscissa[minp], color='pink', linestyle='--')

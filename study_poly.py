@@ -7,6 +7,7 @@ Created on Fri Jan 12 11:02:13 2024
 import os 
 import json
 import numpy as np
+import matplotlib.pyplot as plt
 import python.LogicPiano as LP
 
 m_strictMode = True
@@ -31,11 +32,13 @@ def process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCent
         logic.process_logic(dataRTFI[i], dataFFT[i], allowance[i],
             a_score, m_strictMode, a_towrite,
             periodicity[i], topMatches[i], spectralCentroid[i])
+        logic_final = logic.get_logic_final()
         if to_print and allowance[i] > 0:
-            logic_final = logic.get_logic_final()
             string = "test " + str(logic_final[35])
             string = "test " + str(dataRTFI[i][35])
             print(string)
+        values, indexes = logic.get_points()
+        rtfi_values, rtfi_indexes = logic.get_rtfi_points()
 
 filename = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano_poly.json"
 if not os.path.isfile(filename):
@@ -105,8 +108,8 @@ for item in polyfiles["Allowance"]:
     print("    loaded {}".format(filename))
     #print("    notes {}".format(notes))
     to_print = False 
-    if filename == "55_59_62_72.out":
-        to_print = True 
+    #if filename == "55_59_62_72.out":
+        #to_print = True 
     process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print)
 
 

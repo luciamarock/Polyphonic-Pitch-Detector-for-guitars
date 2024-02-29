@@ -1,5 +1,6 @@
 import math
 import copy
+import utilFunctions as UF
 # Constants from consts.h
 NNOTES = 89
 NHARMS = 108
@@ -28,7 +29,7 @@ class LogicPiano:
         self.exist = [0] * NNOTES
         self.weights_prev = [0] * NHARMS
         self.activenotes = 0
-        self.a_logic = [0] * NNOTES
+        self.a_logic = [0] * NHARMS #prima era NNOTES, cambiato per essere plottato
         self._output = [0] * NNOTES
         self._event_buffer = [0] * NNOTES
         self._errors_buffer = [0] * NNOTES
@@ -59,6 +60,12 @@ class LogicPiano:
     
     def get_test_element(self):
         return self.test
+    
+    def get_points(self):
+        return self._points_values, self._points_indexes
+    
+    def get_rtfi_points(self):
+        return self._rtfi_points_values, self._rtfi_points_indexes
 
     def process_logic(self, data_rtfi, data_fft, allowance, a_score, m_strict_mode, a_towrite, periodicity, top_matches, spectralCentroid):
         #bluemax = 0.0
@@ -71,6 +78,8 @@ class LogicPiano:
         #bluemax, blueidx = self.find_max(data_rtfi)
         #self.energymin = bluemax * rtfithreshold
         fft_avg, fft_Wavg, rtfi_avg, rtfi_Wagv, rtfi_max, maxidx, rtfi_min, minidx = self.new_find_max(data_rtfi, data_fft)
+        self._rtfi_points_values = [rtfi_max,rtfi_min]
+        self._rtfi_points_indexes = [maxidx,minidx]
         value = (rtfi_max + rtfi_min)/2.
         #formatted_value = "%.6f" % value
         #print("{} test".format(formatted_value))
@@ -82,6 +91,8 @@ class LogicPiano:
 
 
         weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx = self.calculate_energy(weights_current, fft_avg, rtfi_Wagv, midiCentroid)
+        self._points_values = [max_general,min_general,max_left,min_left,max_right,min_right]
+        self._points_indexes = [max_general_idx,min_general_idx,max_left_idx,min_left_idx,max_right_idx,min_right_idx]
         new_value = (max_left + max_right) / 2.
         self.test = new_value
         self.minp = max_left_idx
@@ -90,7 +101,19 @@ class LogicPiano:
         #redmax = self.process_vect_note_and_vect_plot(data_fft, data_rtfi, self.energymin, blueidx, allowance,top_matches, periodicity)
         #self.AVenergymin = redmax * stability_threshold
         self.activenotes = 0
-        self.a_logic = [0] * NNOTES
+        self.a_logic = [0] * NHARMS
+        indexes = UF.find_max_rel(copy.copy(weights_current))
+        counter = 0
+        first_th = 0.3
+        second_th = 0.05
+        for index in indexes:
+            if weights_current[index] > max_general * first_th and index != max_general_idx +12 and index != max_general_idx + 19: 
+                counter = counter + 1
+        for index in indexes:
+            if weights_current[index] > max_general * second_th and counter > 1:
+                self.a_logic[index] = copy.copy(rtfi_Wagv[index])
+            elif weights_current[index] > max_general * first_th:
+                self.a_logic[index] = copy.copy(rtfi_Wagv[index])
         #a_relmax = [0] * NNOTES
         #self.prepare_for_evaluation(a_towrite, top_matches, allowance, a_relmax)
         #activation_energy = bluemax * scndharmth * self.energymin
