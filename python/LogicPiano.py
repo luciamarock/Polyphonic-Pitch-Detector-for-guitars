@@ -81,8 +81,7 @@ class LogicPiano:
         self._rtfi_points_values = [rtfi_max,rtfi_min]
         self._rtfi_points_indexes = [maxidx,minidx]
         value = (rtfi_max + rtfi_min)/2.
-        #formatted_value = "%.6f" % value
-        #print("{} test".format(formatted_value))
+
         self.avg_rtfi = value
         
         weights_current = self.vectplot_contains_candidates(rtfi_Wagv, periodicity, top_matches)
@@ -102,20 +101,8 @@ class LogicPiano:
         #self.AVenergymin = redmax * stability_threshold
         self.activenotes = 0
         self.a_logic = [0] * NHARMS
-        indexes = UF.find_max_rel(copy.copy(weights_current))
-        counter = 0
-        first_th = 0.3
-        second_th = 0.05
-        for index in indexes:
-            if weights_current[index] > max_general * first_th and index != max_general_idx +12 and index != max_general_idx + 19: 
-                counter = counter + 1
-        for index in indexes:
-            if weights_current[index] > max_general * second_th and counter > 1:
-                self.a_logic[index] = copy.copy(rtfi_Wagv[index])
-            elif weights_current[index] > max_general * first_th:
-                self.a_logic[index] = copy.copy(rtfi_Wagv[index])
         #a_relmax = [0] * NNOTES
-        #self.prepare_for_evaluation(a_towrite, top_matches, allowance, a_relmax)
+        self.prepare_for_evaluation(data_rtfi)
         #activation_energy = bluemax * scndharmth * self.energymin
         #self.evaluation(a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite)
     
@@ -307,16 +294,24 @@ class LogicPiano:
         return weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx
             
 
-    def prepare_for_evaluation(self, a_towrite, top_matches,allowance, a_relmax):
-        for j in range(NNOTES):
-            if self.vectplot[j] < self.AVenergymin and self.vectplot[j] > 0.0:
-                if self.exist[j] < 4:
-                    self.vectplot[j] = 0.0
-            if self.vectplot[j] > 0.0:
-                self.activenotes += 1
-                self.a_logic[j] = j + 20
-            if self.vectnote[j] > 0. and allowance > 0.:
-                a_relmax[j] = j + 20
+    def prepare_for_evaluation(self,data_rtfi):
+        weights_current = self.logic_final # only for python 
+        indexes = UF.find_max_rel(weights_current)
+        for index in indexes:
+            if weights_current[index] > self.test and index < NNOTES:
+                self.a_logic[index] = copy.copy(data_rtfi[index])
+        return
+        counter = 0
+        first_th = 0.3
+        second_th = 0.05
+        for index in indexes:
+            if weights_current[index] > self._points_values[0] * first_th and index != self._points_indexes[0] +12 and index != self._points_indexes[0] + 19: 
+                counter = counter + 1
+        for index in indexes:
+            if weights_current[index] > self._points_values[0] * second_th and counter > 1:
+                self.a_logic[index] = copy.copy(self.logic_temp[index])
+            elif weights_current[index] > self._points_values[0] * first_th:
+                self.a_logic[index] = copy.copy(self.logic_temp[index])
 
     def evaluation(self, a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite):
         ghost_notes = [0] * NNOTES

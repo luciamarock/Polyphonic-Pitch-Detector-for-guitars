@@ -234,7 +234,7 @@ for i in range(len(allowance)):
         detection = logic.get_detection()  
         #string = "test " + str(test_vect[35])
         #print(string)
-        if activate_plot and i < 22:
+        if activate_plot and i < 0:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()
@@ -249,6 +249,14 @@ for i in range(len(allowance)):
             plt.draw()  # Redraw the plot
             fig.canvas.flush_events()  # Update the plot
             time.sleep(0.016)  # Pause for a moment
+        elif activate_plot:
+            string = ""
+            for k in range(len(detection)):
+                if detection[k] > 0.:
+                    string = string + str(k + 20) + " - "
+                    #formatted_value = "%.6f" % round(value,6)
+                    #string = string + formatted_value + " "
+            print("detection {}".format(string))
 plt.ioff()  # Turn off interactive mode
 plt.show()
 
