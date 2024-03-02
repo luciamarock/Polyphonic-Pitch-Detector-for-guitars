@@ -300,18 +300,7 @@ class LogicPiano:
         for index in indexes:
             if weights_current[index] > self.test and index < NNOTES:
                 self.a_logic[index] = copy.copy(data_rtfi[index])
-        return
-        counter = 0
-        first_th = 0.3
-        second_th = 0.05
-        for index in indexes:
-            if weights_current[index] > self._points_values[0] * first_th and index != self._points_indexes[0] +12 and index != self._points_indexes[0] + 19: 
-                counter = counter + 1
-        for index in indexes:
-            if weights_current[index] > self._points_values[0] * second_th and counter > 1:
-                self.a_logic[index] = copy.copy(self.logic_temp[index])
-            elif weights_current[index] > self._points_values[0] * first_th:
-                self.a_logic[index] = copy.copy(self.logic_temp[index])
+
 
     def evaluation(self, a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite):
         ghost_notes = [0] * NNOTES

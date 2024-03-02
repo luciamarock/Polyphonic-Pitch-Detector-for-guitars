@@ -13,6 +13,9 @@ import python.LogicPiano as LP
 m_strictMode = True
 a_towrite = [0] * LP.NNOTES
 a_score = [0] * LP.NNOTES
+key_counter = 0
+collection = {}
+performances = []
 
 def expected_notes(filename):
     notes = []
@@ -25,6 +28,8 @@ def expected_notes(filename):
     return notes
 
 def process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print):
+    global performances
+    punteggio = 0.
     if to_print:
         print(notes)
     logic = LP.LogicPiano()
@@ -32,13 +37,25 @@ def process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCent
         logic.process_logic(dataRTFI[i], dataFFT[i], allowance[i],
             a_score, m_strictMode, a_towrite,
             periodicity[i], topMatches[i], spectralCentroid[i])
-        logic_final = logic.get_logic_final()
+        if allowance[i] > 0:
+            logic_final = logic.get_detection()
+            detection = []
+            for k in range(len(logic_final)):
+                if logic_final[k] > 0.0:
+                    detection.append(k+20)
+            for note in notes:
+                if note in detection:
+                    punteggio = punteggio + len(notes) # note riconosciute 
+                else:
+                    punteggio = punteggio - 1 # note non riconosciute 
+            for detected in detection:
+                if detected not in notes: # note sbagliate 
+                    punteggio = punteggio - 1
         if to_print and allowance[i] > 0:
             string = "test " + str(logic_final[35])
             string = "test " + str(dataRTFI[i][35])
             print(string)
-        values, indexes = logic.get_points()
-        rtfi_values, rtfi_indexes = logic.get_rtfi_points()
+    performances.append(punteggio)
 
 filename = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/piano_poly.json"
 if not os.path.isfile(filename):
@@ -67,6 +84,12 @@ filename = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/study/pia
 with open(filename, 'r') as DF:
     monofiles = json.load(DF)
     DF.close()
+    
+collection_file = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/logic/4_condizioni_logiche/collection.json"
+if not os.path.isfile(collection_file):
+    write_collection = True
+else:
+    write_collection = False
 
 mono_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/"
 for item in monofiles["Allowance"]:
@@ -86,6 +109,9 @@ for item in monofiles["Allowance"]:
     notes = expected_notes(filename)
     print("    loaded {}".format(filename))
     #print("    notes {}".format(notes))
+    if write_collection:
+        collection[str(key_counter)] = filename
+        key_counter+=1
     to_print = False
     process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print)
 
@@ -107,9 +133,24 @@ for item in polyfiles["Allowance"]:
     notes = expected_notes(filename)
     print("    loaded {}".format(filename))
     #print("    notes {}".format(notes))
+    if write_collection:
+        collection[str(key_counter)] = filename
+        key_counter+=1
     to_print = False 
     #if filename == "55_59_62_72.out":
         #to_print = True 
     process(notes,dataRTFI,dataFFT,allowance,periodicity,topMatches,spectralCentroid,to_print)
 
-
+if write_collection:
+    collection["prestazioni"] = performances
+    with open(collection_file, 'w') as json_file:
+        json.dump(collection, json_file, indent=2)
+        json_file.close()
+else:
+    with open(collection_file, 'r') as json_file:
+        collection = json.load(json_file)
+        reference = collection["prestazioni"]
+        json_file.close()
+    plt.plot(reference)
+    plt.plot(performances,"o")
+    plt.show()
