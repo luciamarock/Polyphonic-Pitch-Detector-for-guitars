@@ -184,14 +184,14 @@ sys.exit()
 abscissa = n.arange(20, 128)
 
 """ monophonic samples """
-filename = "34.out"
-scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/"
-allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
+#filename = "30.out"
+#scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/"
+#allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
 
 """ poliphonic samples """
-#filename = "55_59_62_72.out"
-#scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
-#allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
+filename = "42_45_49.out"  # 55_59_62_72.out
+scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
+allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
 
 print(allowance_file)
 
@@ -237,7 +237,7 @@ for i in range(len(allowance)):
         detection = logic.get_detection()  
         #string = "test " + str(test_vect[35])
         #print(string)
-        if activate_plot and i < 20 + start:
+        if activate_plot and i < 55 + start:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()

@@ -151,6 +151,9 @@ else:
         collection = json.load(json_file)
         reference = collection["prestazioni"]
         json_file.close()
+    #colors = ['red' if perf < ref else 'green' for ref, perf in zip(reference, performances)]
+    colors = ['red' if perf < ref else 'green' if perf > ref else 'blue' for ref, perf in zip(reference, performances)] 
     plt.plot(reference)
-    plt.plot(performances,"o")
+    for i, perf in enumerate(performances):
+        plt.plot(i, perf, marker='o', color=colors[i])
     plt.show()

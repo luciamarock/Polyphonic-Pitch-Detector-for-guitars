@@ -82,7 +82,7 @@ class LogicPiano:
         self._rtfi_points_indexes = [maxidx,minidx]
         value = (rtfi_max + rtfi_min)/2.
 
-        self.avg_rtfi = value
+        self.avg_rtfi = rtfi_max * 0.91
         
         weights_current = self.vectplot_contains_candidates(rtfi_Wagv, periodicity, top_matches)
         
@@ -93,7 +93,7 @@ class LogicPiano:
         self._points_values = [max_general,min_general,max_left,min_left,max_right,min_right]
         self._points_indexes = [max_general_idx,min_general_idx,max_left_idx,min_left_idx,max_right_idx,min_right_idx]
         new_value = (max_left + max_right) / 2.
-        self.test = new_value
+        self.test = new_value #0.03
         self.minp = max_left_idx
         self.maxp = max_right_idx
         self.logic_final = copy.copy(weights_current)
@@ -102,7 +102,7 @@ class LogicPiano:
         self.activenotes = 0
         self.a_logic = [0] * NHARMS
         #a_relmax = [0] * NNOTES
-        self.prepare_for_evaluation(data_rtfi)
+        self.prepare_for_evaluation(data_rtfi,value,new_value)
         #activation_energy = bluemax * scndharmth * self.energymin
         #self.evaluation(a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite)
     
@@ -294,14 +294,17 @@ class LogicPiano:
         return weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx
             
 
-    def prepare_for_evaluation(self,data_rtfi):
-        weights_current = self.logic_final # only for python 
-        indexes = UF.find_max_rel(weights_current)
+    def prepare_for_evaluation(self,data_rtfi,value,new_value):
+        weights_current = self.logic_final # score vector 
+        indexes = UF.find_max_rel(weights_current) #peaks 
+        detection_temp = []
         for index in indexes:
-            if weights_current[index] > self.test and index < NNOTES:
-                self.a_logic[index] = copy.copy(data_rtfi[index])
-
-
+            if weights_current[index] >= new_value and index < NNOTES:
+                #tries to not detect false notes (tipically harmonics or artifacts) even if they are above self.test threshold 
+                if index < 21 or (index > 20 and data_rtfi[index] > value):
+                    self.a_logic[index] = copy.copy(data_rtfi[index])
+                    detection_temp.append(index)
+        
     def evaluation(self, a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite):
         ghost_notes = [0] * NNOTES
         for i in range(NNOTES):
