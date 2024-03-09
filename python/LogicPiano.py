@@ -19,16 +19,10 @@ class LogicPiano:
         self.vectnote = [0.0] * NNOTES
         self.vectfft = [0.0] * NHARMS
         self.vectplot = [0.0] * NNOTES
-        self.memory = [0.0] * NNOTES
-        self.energymin = 0.0
-        self.avfft = 0.0
-        self.avrfti = 0.0
-        self.totalenergy = 0.0
-        self.AVenergymin = 0.0
-        self.NOpattern = 0
-        self.exist = [0] * NNOTES
+        self.memory = [0.0] * NNOTES #TODO not used yet
+        self.exist = [0] * NNOTES #TODO not used yet
+        self.activenotes = 0 #TODO not used yet
         self.weights_prev = [0] * NHARMS
-        self.activenotes = 0
         self.a_logic = [0] * NHARMS #prima era NNOTES, cambiato per essere plottato
         self._output = [0] * NNOTES
         self._event_buffer = [0] * NNOTES
@@ -68,15 +62,13 @@ class LogicPiano:
         return self._rtfi_points_values, self._rtfi_points_indexes
 
     def process_logic(self, data_rtfi, data_fft, allowance, a_score, m_strict_mode, a_towrite, periodicity, top_matches, spectralCentroid):
-        #bluemax = 0.0
-        #redmax = 0.0
+
         if spectralCentroid > 1.:
             midi_temp = 12 * math.log(spectralCentroid/440., 2) + 69
             midiCentroid = int(round(midi_temp))
         else:
             midiCentroid = index_to_MIDI + 1
-        #bluemax, blueidx = self.find_max(data_rtfi)
-        #self.energymin = bluemax * rtfithreshold
+
         fft_avg, fft_Wavg, rtfi_avg, rtfi_Wagv, rtfi_max, maxidx, rtfi_min, minidx = self.new_find_max(data_rtfi, data_fft)
         self._rtfi_points_values = [rtfi_max,rtfi_min]
         self._rtfi_points_indexes = [maxidx,minidx]
@@ -97,14 +89,8 @@ class LogicPiano:
         self.minp = max_left_idx
         self.maxp = max_right_idx
         self.logic_final = copy.copy(weights_current)
-        #redmax = self.process_vect_note_and_vect_plot(data_fft, data_rtfi, self.energymin, blueidx, allowance,top_matches, periodicity)
-        #self.AVenergymin = redmax * stability_threshold
-        self.activenotes = 0
         self.a_logic = [0] * NHARMS
-        #a_relmax = [0] * NNOTES
         self.prepare_for_evaluation(data_rtfi,value,new_value)
-        #activation_energy = bluemax * scndharmth * self.energymin
-        #self.evaluation(a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite)
     
     def new_find_max(self, data_rtfi, data_fft):
         fft_avg = []
@@ -293,7 +279,7 @@ class LogicPiano:
         
         return weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx
             
-
+    #TODO use those vectors here 
     def prepare_for_evaluation(self,data_rtfi,value,new_value):
         weights_current = self.logic_final # score vector 
         indexes = UF.find_max_rel(weights_current) #peaks 
@@ -356,14 +342,6 @@ class LogicPiano:
         for i in range(NNOTES):
             if ghost_notes[i] == 0:
                 self._event_buffer[i] = 0
-        # uncomment here to print on terminal (and eventually redirecting the output on a file > ...)
-        """
-        to_print = ""
-        for elem in a_towrite:
-            if elem != 0:
-                to_print = to_print + "\t" + str(int(elem))
-        print(to_print)
-        """
         self._output = a_towrite
 
     def _find_element(self, to_search, vector_to_search):

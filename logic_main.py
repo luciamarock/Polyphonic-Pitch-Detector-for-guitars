@@ -189,7 +189,7 @@ abscissa = n.arange(20, 128)
 #allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
 
 """ poliphonic samples """
-filename = "42_45_49.out"  # 55_59_62_72.out
+filename = "55_59_62_72.out"  # 55_59_62_72.out or 42_45_49.out
 scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
 allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
 
@@ -217,6 +217,12 @@ for i in range(len(allowance)):
     a_towrite = [0] * NNOTES
     a_score = matrixscore[i]
     logic.process_logic(dataRTFI[i], dataFFT[i], allowance[i], a_score, m_strictMode, a_towrite, periodicity[i], topMatches[i], spectralCentroid[i])
+    if not activate_plot:
+        string = "score "
+        for expected_note in a_score:
+            if expected_note > 0:
+                string = string + str(int(expected_note)) + " "
+        print(string)
     if allowance[i] > 0.0: # first note in score at frame 562  
         if start < 0:
             start = i
@@ -237,7 +243,7 @@ for i in range(len(allowance)):
         detection = logic.get_detection()  
         #string = "test " + str(test_vect[35])
         #print(string)
-        if activate_plot and i < 55 + start:
+        if activate_plot and i < 0 + start:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()
