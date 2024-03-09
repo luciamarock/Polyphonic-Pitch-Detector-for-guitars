@@ -19,11 +19,9 @@ class LogicPiano:
         self.vectnote = [0.0] * NNOTES
         self.vectfft = [0.0] * NHARMS
         self.vectplot = [0.0] * NNOTES
-        self.memory = [0.0] * NNOTES #TODO not used yet
         self.exist = [0] * NNOTES #TODO not used yet
         self.activenotes = 0 #TODO not used yet
         self.weights_prev = [0] * NHARMS
-        self.a_logic = [0] * NHARMS #prima era NNOTES, cambiato per essere plottato
         self._output = [0] * NNOTES
         self._event_buffer = [0] * NNOTES
         self._errors_buffer = [0] * NNOTES
@@ -85,11 +83,12 @@ class LogicPiano:
         self._points_values = [max_general,min_general,max_left,min_left,max_right,min_right]
         self._points_indexes = [max_general_idx,min_general_idx,max_left_idx,min_left_idx,max_right_idx,min_right_idx]
         new_value = (max_left + max_right) / 2.
-        self.test = new_value #0.03
+        self.test = max_general * 0.09
         self.minp = max_left_idx
         self.maxp = max_right_idx
         self.logic_final = copy.copy(weights_current)
-        self.a_logic = [0] * NHARMS
+        self.a_logic = [0.0] * NHARMS #prima era NNOTES, cambiato per essere plottato
+        self.a_logic_rich = [0.0] * NNOTES #conserva i picchi superiori ad una soglia piu bassa 
         self.prepare_for_evaluation(data_rtfi,value,new_value)
     
     def new_find_max(self, data_rtfi, data_fft):
@@ -279,7 +278,6 @@ class LogicPiano:
         
         return weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx
             
-    #TODO use those vectors here 
     def prepare_for_evaluation(self,data_rtfi,value,new_value):
         weights_current = self.logic_final # score vector 
         indexes = UF.find_max_rel(weights_current) #peaks 
@@ -290,7 +288,10 @@ class LogicPiano:
                 if index < 21 or (index > 20 and data_rtfi[index] > value):
                     self.a_logic[index] = copy.copy(data_rtfi[index])
                     detection_temp.append(index)
+            elif weights_current[index] >= self.test and index < NNOTES:
+                self.a_logic_rich[index] = copy.copy(data_rtfi[index])
         
+    #TODO use those vectors here 
     def evaluation(self, a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite):
         ghost_notes = [0] * NNOTES
         for i in range(NNOTES):

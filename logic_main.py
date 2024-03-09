@@ -28,6 +28,16 @@ NHARMS = LP.NHARMS
 index_to_MIDI = 20 # Added to C++ !!
 m_strictMode = True
 
+def expected_notes(filename):
+    notes = []
+    temp = filename.split(".")
+    notenames = temp[0].split("_")
+    for item in notenames:
+        if item:
+            notes.append(int(item))
+    
+    return notes
+
 def freq_to_MIDI(numpy_array):
     """
     Converts an array of frequencies to corresponding MIDI numbers.
@@ -190,6 +200,7 @@ abscissa = n.arange(20, 128)
 
 """ poliphonic samples """
 filename = "55_59_62_72.out"  # 55_59_62_72.out or 42_45_49.out
+notes = expected_notes(filename)
 scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
 allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
 
@@ -215,11 +226,14 @@ start = -1
 
 for i in range(len(allowance)):
     a_towrite = [0] * NNOTES
-    a_score = matrixscore[i]
+    a_score = [0] * NNOTES
+    #a_score = matrixscore[i]
+    for nn in notes:
+        a_score[nn-20] = nn
     logic.process_logic(dataRTFI[i], dataFFT[i], allowance[i], a_score, m_strictMode, a_towrite, periodicity[i], topMatches[i], spectralCentroid[i])
     if not activate_plot:
         string = "score "
-        for expected_note in a_score:
+        for index, expected_note in enumerate(a_score):
             if expected_note > 0:
                 string = string + str(int(expected_note)) + " "
         print(string)
@@ -243,7 +257,7 @@ for i in range(len(allowance)):
         detection = logic.get_detection()  
         #string = "test " + str(test_vect[35])
         #print(string)
-        if activate_plot and i < 0 + start:
+        if activate_plot and i < 40 + start:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()
@@ -268,7 +282,6 @@ for i in range(len(allowance)):
             print("detection {}".format(string))
 plt.ioff()  # Turn off interactive mode
 plt.show()
-
 
 """
 # only useful when analyzing a song in sync with the score 
