@@ -85,7 +85,7 @@ with open(filename, 'r') as DF:
     monofiles = json.load(DF)
     DF.close()
     
-collection_file = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/logic/4_condizioni_logiche/collection.json"
+collection_file = "/home/luciamarock/Dropbox/shared/dev/PitchDetector/appunti/logic/studies/4_condizioni_logiche/collection.json"
 if not os.path.isfile(collection_file):
     write_collection = True
 else:

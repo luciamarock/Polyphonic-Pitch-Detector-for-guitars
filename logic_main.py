@@ -9,8 +9,8 @@ In theory, the script should produce the same results as the C++ implementation.
 This script loads piano note frequencies from a file, reads score data, converts it into a matrix representation, and 
 generates a JSON file containing information about MIDI note numbers, note names, and frequencies.
 """
-
 import os
+import sys
 import json
 import math
 import time
@@ -194,12 +194,13 @@ sys.exit()
 abscissa = n.arange(20, 128)
 
 """ monophonic samples """
-#filename = "30.out"
+#filename = "82.out"
+#notes = expected_notes(filename)
 #scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/"
 #allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
 
 """ poliphonic samples """
-filename = "55_59_62_72.out"  # 55_59_62_72.out or 42_45_49.out
+filename = "40_61.out"  # 55_59_62_72.out or 42_45_49.out
 notes = expected_notes(filename)
 scores_base_path = "/home/luciamarock/Documents/AudioAnalyzer/scores/piano/Poly/"
 allowance_file = scores_base_path + "Allowance" + os.path.sep + filename 
@@ -257,14 +258,14 @@ for i in range(len(allowance)):
         detection = logic.get_detection()  
         #string = "test " + str(test_vect[35])
         #print(string)
-        if activate_plot and i < 40 + start:
+        if activate_plot and i < 0 + start:
             th = logic.get_avg_rtfi()
             minp, maxp = logic.get_min_max_idx_peacks()
             ax.clear()
             ax.plot(abscissa,test_vect)
-            #ax.plot(abscissa,logic_temp)
             ax.plot(abscissa,logic_final)
             ax.plot(abscissa,detection,"o")
+            ax.plot(abscissa,logic_temp,"x",color="black")
             ax.axhline(y=th, color='grey', linestyle='--')
             ax.axhline(y=test_element, color='grey', linestyle='--')
             #ax.axvline(abscissa[minp], color='pink', linestyle='--')
@@ -280,6 +281,13 @@ for i in range(len(allowance)):
                     #formatted_value = "%.6f" % round(value,6)
                     #string = string + formatted_value + " "
             print("detection {}".format(string))
+            after_evaluation = []
+            for element in output:
+                if element != 0:
+                    after_evaluation.append(element)
+            print(after_evaluation)
+        #else:
+            #sys.exit()
 plt.ioff()  # Turn off interactive mode
 plt.show()
 

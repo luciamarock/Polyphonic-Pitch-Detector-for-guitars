@@ -11,6 +11,7 @@ firstharmth = 4.3 / sens
 scndharmth = 3.999 / sens
 using_score = 1
 op_wait = 9
+ac_wait = 4
 index_to_MIDI = 20
 
 class LogicPiano:
@@ -19,13 +20,13 @@ class LogicPiano:
         self.vectnote = [0.0] * NNOTES
         self.vectfft = [0.0] * NHARMS
         self.vectplot = [0.0] * NNOTES
-        self.exist = [0] * NNOTES #TODO not used yet
-        self.activenotes = 0 #TODO not used yet
+        self._inactivenotes = [0] * NNOTES
         self.weights_prev = [0] * NHARMS
         self._output = [0] * NNOTES
         self._event_buffer = [0] * NNOTES
         self._errors_buffer = [0] * NNOTES
         self.conditions = [0] * NNOTES
+        self._last_written = [0] * NNOTES
         self.logic_temp = [0.0] * NHARMS
         self.logic_final = [0.0] * NHARMS
     
@@ -75,10 +76,6 @@ class LogicPiano:
         self.avg_rtfi = rtfi_max * 0.91
         
         weights_current = self.vectplot_contains_candidates(rtfi_Wagv, periodicity, top_matches)
-        
-        self.logic_temp = copy.copy(rtfi_Wagv)
-
-
         weights_current, max_general, max_general_idx, min_general, min_general_idx, max_left, max_left_idx, min_left, min_left_idx, max_right, max_right_idx, min_right, min_right_idx = self.calculate_energy(weights_current, fft_avg, rtfi_Wagv, midiCentroid)
         self._points_values = [max_general,min_general,max_left,min_left,max_right,min_right]
         self._points_indexes = [max_general_idx,min_general_idx,max_left_idx,min_left_idx,max_right_idx,min_right_idx]
@@ -89,7 +86,13 @@ class LogicPiano:
         self.logic_final = copy.copy(weights_current)
         self.a_logic = [0.0] * NHARMS #prima era NNOTES, cambiato per essere plottato
         self.a_logic_rich = [0.0] * NNOTES #conserva i picchi superiori ad una soglia piu bassa 
+        self.exist = [0] * NNOTES
         self.prepare_for_evaluation(data_rtfi,value,new_value)
+        
+        self.logic_temp = copy.copy(self.a_logic_rich)
+
+        if allowance > 0:
+            self.evaluation(a_score,a_towrite)
     
     def new_find_max(self, data_rtfi, data_fft):
         fft_avg = []
@@ -288,62 +291,50 @@ class LogicPiano:
                 if index < 21 or (index > 20 and data_rtfi[index] > value):
                     self.a_logic[index] = copy.copy(data_rtfi[index])
                     detection_temp.append(index)
-            elif weights_current[index] >= self.test and index < NNOTES:
+            if weights_current[index] >= self.test and index < NNOTES:
                 self.a_logic_rich[index] = copy.copy(data_rtfi[index])
-        
-    #TODO use those vectors here 
-    def evaluation(self, a_score, activation_energy, a_relmax, m_strict_mode, data_rtfi, a_towrite):
-        ghost_notes = [0] * NNOTES
+                self.exist[index] = index + 20
+         
+    def evaluation(self, a_score, a_towrite):
         for i in range(NNOTES):
             if a_score[i] > 0:
-                if self._find_element(a_score[i], self.a_logic if m_strict_mode else a_relmax):
-                    a_towrite[i] = a_score[i]
-                    self._event_buffer[i] = a_score[i]
-                    ghost_notes[i] = 1
-                    self._errors_buffer[i] = 0
-                elif self._find_element(a_score[i] + 12, self.a_logic if m_strict_mode else a_relmax) or self._find_element(a_score[i] + 19, self.a_logic if m_strict_mode else a_relmax):
-                    if data_rtfi[i] > activation_energy:
-                        a_towrite[i] = a_score[i]
-                        self._event_buffer[i] = a_score[i]
-                        ghost_notes[i] = 1
-                        self._errors_buffer[i] = 0
-                    else:
-                        a_towrite[i] = -100
+                if self._find_element(a_score[i], self.exist):
+                    if self._event_buffer[i] <= ac_wait:
+                        self._event_buffer[i] += 1
+                    if self._inactivenotes[i] > 0:
+                        self._inactivenotes[i] -= 1
                 else:
-                    self._errors_buffer[i] += 1
-                    if self._errors_buffer[i] > op_wait:
-                        a_towrite[i] = a_score[i] * (-1)
+                    if self._inactivenotes[i] <= op_wait:
+                        self._inactivenotes[i] += 1
+                    if self._event_buffer[i] > 0:
+                        self._event_buffer[i] -= 1
+                if self._event_buffer[i] > ac_wait:
+                    a_towrite[i] = copy.copy(a_score[i])
+                elif self._inactivenotes[i] > op_wait:
+                    a_towrite[i] = copy.copy(a_score[i]) * -1
+                else:
+                    a_towrite[i] = copy.copy(self._last_written[i])
+            else:
+                self._event_buffer[i] = 0
+                self._inactivenotes[i] = 0
+            #now a_logic
+            
+            if self.a_logic[i] > 0:
+                if self._find_element(i+20, a_score) or self._find_element(i+20-12, a_score) or self._find_element(i+20-19, a_score) or self._find_element(i+32, a_score):
+                    self._errors_buffer[i] = 0
+                else:
+                    if self._errors_buffer[i] <= op_wait:
+                        self._errors_buffer[i] += 1
+                if self._errors_buffer[i] > op_wait:
+                    a_towrite[i] = (i + 20) * -1
             else:
                 if self._errors_buffer[i] > 0:
-                    self._errors_buffer[i] = 0
-
-            if self.a_logic[i] > 0:
-                if self._find_element(self.a_logic[i], self._event_buffer):
-                    ghost_notes[i] = 1
-                elif self._find_element(self.a_logic[i - 12], self._event_buffer):
-                    ghost_notes[i - 12] = 1
-                elif self._find_element(self.a_logic[i - 19], self._event_buffer):
-                    ghost_notes[i - 19] = 1
-                elif self._find_element(self.a_logic[i - 24], self._event_buffer):
-                    ghost_notes[i - 24] = 1
-                elif self._find_element(self.a_logic[i - 28], self._event_buffer):
-                    ghost_notes[i - 28] = 1
-                elif self._find_element(self.a_logic[i - 43], self._event_buffer):
-                    ghost_notes[i - 43] = 1
-                elif self._find_element(self.a_logic[i - 47], self._event_buffer):
-                    ghost_notes[i - 47] = 1
-                else:
                     self._errors_buffer[i] -= 1
-                    if self._errors_buffer[i] < op_wait * (-1):
-                        a_towrite[i] = self.a_logic[i] * (-0.1)
-            else:
-                if self._errors_buffer[i] < 0:
-                    self._errors_buffer[i] = 0
-
-        for i in range(NNOTES):
-            if ghost_notes[i] == 0:
-                self._event_buffer[i] = 0
-        self._output = a_towrite
+            
+            self._last_written[i] = copy.copy(a_towrite[i])
+        self._output = copy.copy(a_towrite)
+        #print(self._event_buffer)
+        #print(self._inactivenotes)
 
     def _find_element(self, to_search, vector_to_search):
         return to_search in vector_to_search
