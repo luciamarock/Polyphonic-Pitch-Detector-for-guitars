@@ -328,11 +328,12 @@ class LogicPiano:
                 if self._errors_buffer[i] > op_wait:
                     a_towrite[i] = (i + 20) * -1
             else:
-                if self._errors_buffer[i] > 0:
-                    self._errors_buffer[i] -= 1
+                if self._errors_buffer[i] > 1:
+                    self._errors_buffer[i] -= 2
             
             self._last_written[i] = copy.copy(a_towrite[i])
         self._output = copy.copy(a_towrite)
+        #print(self._errors_buffer)
         #print(self._event_buffer)
         #print(self._inactivenotes)
 
