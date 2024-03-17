@@ -59,7 +59,7 @@ int main()
     
     /** sf is the pointer to the .wav file, library sndfile is used to open the WAV file. */
     info.format = 0;
-    sf = sf_open("./audioFiles/poly/Cddim.wav",SFM_READ,&info); // piano = piano/Dmaj4  /  guitar = poly/Amag_open
+    sf = sf_open("/home/luciamarock/Documents/AudioAnalyzer/audioFiles/poly/Cddim.wav",SFM_READ,&info); // piano = piano/Dmaj4  /  guitar = poly/Amag_open
     if (sf == NULL)
         {
         printf("Failed to open the file.\n");
