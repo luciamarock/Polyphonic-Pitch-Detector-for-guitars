@@ -32,3 +32,4 @@ build/
 nbproject/
 dist/
 .kdev4/
+pdct_lib/pdct_lib.kdev4
