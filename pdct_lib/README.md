@@ -68,4 +68,58 @@ Once built, you can run the application with the following commands:
    ```sh
    $ ./pdct
    ```
+## Addition about ALSA and Jack
+
+To use the pdct_lib library effectively, you'll need a basic understanding of ALSA (Advanced Linux Sound Architecture) and Jack (Jack Audio Connection Kit).
+
+**ALSA:**
+
+ALSA is the standard audio system for Linux. To view a list of available audio devices on your system, use the following command:
+
+```
+aplay -l
+```
+
+The output of this command will display information about available playback and recording devices.
+
+**Example Output:**
+
+```
+**** List of PLAYBACK hardware devices ****
+card 0: Intel [HDA Intel], device 0: AD1981 Analog [AD1981 Analog]
+Subdevices: 1/1
+Subdevice #0: subdevice #0
+```
+
+In this example, the system has an Intel sound card with an AD1981 analog playback device. Subdevice #0 identifies the playback device to use with Jack.
+
+**Jack:**
+
+Jack is a low-latency audio server that allows you to connect various audio applications together. To start Jack, use the following command:
+
+```
+jackd -P 10 -d alsa -d hw:0 -r 44100 -p 256
+```
+
+**Command Options:**
+
+* `-P 10`: Sets the priority for Jack.
+* `-d alsa`: Specifies ALSA as the audio backend.
+* `-d hw:0`: Selects subdevice #0 as the output device.
+* `-r 44100`: Sets the sampling rate to 44100 Hz.
+* `-p 256`: Sets the buffer size to 256 samples.
+
+**Running pdct_lib with Jack:**
+
+Once Jack is running, you can launch applications that utilize the pdct_lib library. Ensure you specify Jack as the audio backend when starting these applications.
+
+**For More Information:**
+
+* Refer to the ALSA documentation: [https://www.alsa-project.org/wiki/Main_Page](https://www.alsa-project.org/wiki/Main_Page)
+* Refer to the Jack documentation: [https://jackaudio.org/](https://jackaudio.org/)
+
+**Notes:**
+
+* The commands above are examples and might need adjustments based on your system configuration.
+* Make sure you have the necessary ALSA and Jack packages installed.
 
