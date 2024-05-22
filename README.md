@@ -2,7 +2,7 @@
 
 This repository hosts a pitch detection application designed for Linux systems, specifically tailored for guitar input. The underlying methodology is based on complex resonators and is optimized for accurate pitch estimation. The theoretical foundation of complex resonators can be found in the article titled "A Computationally Efficient Method for Polyphonic Pitch Estimation" authored by Ruohua Zhou, Joshua D. Reiss, Marco Mattavelli, and Giorgio Zoia.
 
-The system is currently in a developmental phase to incorporate frequency domain effects as demonstrated on the page ["My Project Showcase"](http://lushmaroon.altervista.org/my-project.html?cb=1495296000881).  
+The system is currently in a developmental phase to incorporate frequency domain effects  
   
 ## About the Algorithm
 
@@ -18,6 +18,6 @@ The versatility of this algorithm opens up numerous musical applications. One pr
 
 The repository aims to make this innovative algorithm accessible and has the potential to reshape sound possibilities, making the dream of creating unique and distinctive guitar sounds a reality. The system's compact form factor allows for interaction with smartphones and online communities, ushering in new realms of sonic exploration.
 
-For a visual demonstration of the algorithm controlling external synthesizers, [watch this video](https://www.youtube.com/watch?v=R00SUzQEruI&ab_channel=Lu%C3%A7ianodelosCimarrones).
+For a visual demonstration of the algorithm, [watch these videos](https://www.youtube.com/playlist?list=PL3pYQ_Ww19BV61bMUF2VkwfdTDds1Mixh).
 
 A C++ version of the algorithm is currently being prepared and is available within this GitHub repository. Stay tuned for updates! For the latest news, visit [my Telegram channel](https://t.me/luciamarockmood).
