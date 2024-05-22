@@ -1,9 +1,0 @@
-	##### FILE EXPLANATION #####
-
---> hamming.in 1024 samples hamming window (hamming[] in the main.cpp) it is used for windowing the fft_buffer (myFFT). 
---> notes.txt is produced by resonators.cpp and contains the 51 fundamental frequencies of the resonators 
---> mapping.txt contains the position (indexes) of the closest amplitude points for the f0 frequencies [old FFT]
---> gino.txt is produced by resonators.cpp and contains the 70 fundamental frequencies for the fft 
---> coeffs.txt is an export of the RTFI coefficients (not used in python)
---> selected.txt contains the real myFFT aplitude (for that f0) after parabola interpolation [this is the core of the new fft version]
---> ascisse.txt contains the abscissa for myFFT values. 
